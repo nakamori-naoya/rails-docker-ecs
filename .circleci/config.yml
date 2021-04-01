@@ -39,19 +39,8 @@ jobs:
             - ~/repo/backend/vendor/bundle
           working_directory: ~/repo/backend
 
-
-
-      - run:
-          name: create directory to store test results
-          command: mkdir /tmp/test-results
-          working_directory: ~/repo/backend
-
-      - run:
-          name: RSpec
-          command: |
-            bundle exec rspec $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings) \
-              || (printf "====== RETRYING...\n\n\n"; bundle exec rspec --only-failures)
-          working_directory: ~/repo/backend
+      # Database setup
+      
 
       # collect reports
       - store_test_results:
