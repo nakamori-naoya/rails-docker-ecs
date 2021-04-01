@@ -6,6 +6,7 @@ services:
     image: mysql:5.7.30
     environment:
       TZ: Asia/Tokyo
+      RAILS_ENV: development
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     volumes:
       - mysql_data:/var/lib/mysql
