@@ -68,6 +68,7 @@ jobs:
       - store_artifacts:
           path: /home/circleci/repo/tmp/screenshots
 
+
   build_and_push_image_backend:
     machine:
       image: ubuntu-1604:201903-01
@@ -82,12 +83,12 @@ jobs:
 
 workflows:
   version: 2
-  test:
-    jobs:
-      - test_backend:
-          filters:
-            branches:
-              ignore: main
+  # test:
+  #   jobs:
+  #     - test_backend:
+  #         filters:
+  #           branches:
+  #             ignore: main
   test_and_deploy:
     jobs:
       - test_backend:
