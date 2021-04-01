@@ -19,45 +19,18 @@ jobs:
       - checkout
 
       # restore gem from cache
-      - restore_cache:
-          keys:
-            - gem-cache-v1-{{ checksum "~/repo/backend/Gemfile.lock" }}
-            - gem-cache-v1-
-          working_directory: ~/repo/backend
-
-      # gem install
       - run:
-          command: |
-            gem install bundler
-            bundle config set path 'vendor/bundle'
-            bundle install --jobs=4 --retry=3
-          working_directory: ~/repo/backend
-
-      - save_cache:
-          key: gem-cache-v1-{{ checksum "~/repo/backend/Gemfile.lock" }}
-          paths:
-            - ~/repo/backend/vendor/bundle
-          working_directory: ~/repo/backend
-
-      # Database setup
+         name: docker-compose up
+         command: |
+          docker-compose up -d --build
       - run:
-          command: bundle exec rails db:create
-          working_directory: ~/repo/backend
-      - run:
-          command: bundle exec rails db:migrate
-          working_directory: ~/repo/backend
+         name: RSpec
+         command: docker-compose exec -d backend bundle exec rspec spec/models
 
       - run:
-          name: create directory to store test results
-          command: mkdir /tmp/test-results
-          working_directory: ~/repo/backend
-
-      - run:
-          name: RSpec
-          command: |
-            bundle exec rspec $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings) \
-              || (printf "====== RETRYING...\n\n\n"; bundle exec rspec --only-failures)
-          working_directory: ~/repo/backend
+         name: docker-compose down
+         command: |
+          docker-compose down
 
       # collect reports
       - store_test_results:
