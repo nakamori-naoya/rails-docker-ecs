@@ -83,6 +83,28 @@ jobs:
 
 workflows:
   version: 2
+  test:
+    jobs:
+      - test_backend:
+          filters:
+            branches:
+              ignore: main
+      - build_and_push_image_backend:
+          requires:
+            - test_backend
+          filters:
+            branches:
+              only: main
+      - aws-ecs/deploy-service-update:
+          requires:
+            - build_and_push_image_backend
+          family: "zenn-app-task-backend"
+          service-name: "zenn-app-service-backend"
+          cluster-name: "production"
+          container-image-name-updates: "container=zenn-app-container-backend,tag=${CIRCLE_SHA1}"
+          filters:
+            branches:
+              only: main
   test_and_deploy:
     jobs:
       - test_backend:
