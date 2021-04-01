@@ -6,7 +6,6 @@ services:
     image: mysql:5.7.30
     environment:
       TZ: Asia/Tokyo
-      MYSQL_DATABASE: 'online_community_development'
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
     volumes:
       - mysql_data:/var/lib/mysql
