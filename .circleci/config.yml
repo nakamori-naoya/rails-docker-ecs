@@ -96,8 +96,8 @@ workflows:
             branches:
               only: main
       - build_and_push_image_backend:
-          requires:
-            - test_backend
+          # requires:
+          #   - test_backend
           filters:
             branches:
               only: main
