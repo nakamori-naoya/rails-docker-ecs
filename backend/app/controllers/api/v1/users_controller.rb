@@ -4,7 +4,7 @@ class Api::V1::UsersController < ApplicationController
     def index
         users = User.all
         user = current_user
-        render json: {status: 200, users: except_datas(users.json), user: except_data(current_user.to_json),  }
+        render json: {status: 200, users: except_datas(users.to_json), user: except_data(current_user.to_json),  }
     end
 
     def create
