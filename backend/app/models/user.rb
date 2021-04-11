@@ -5,5 +5,5 @@ class User < ApplicationRecord
     has_secure_password
     validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }
     validates :nickName,  length: { maximum: 16 }   
-    validates :password_digest, presence: true , format: { with: VALID_PASSWORD_REGEX }
+    validates :password, presence: true , format: { with: VALID_PASSWORD_REGEX }
 end
