@@ -8,11 +8,11 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def create
-        user = User.new(users_params)
-        if user.email.blank?
+        @user = User.new(users_params)
+        if @user.email.blank?
           response_bad_request
         else
-            if user.save
+            if @user.save
               # bucket = Aws::S3::Resource.new(
               #   :region => 'ap-northeast-1',
               #   :access_key_id => ENV['AWS_ACCCES_KEY'],
@@ -39,7 +39,7 @@ class Api::V1::UsersController < ApplicationController
       private
 
       def users_params
-        params.permit(:email, :password, :nickName, :user)
+        params.permit(:email, :password, :nickName)
       end
 
       def response_fields(user_json)
