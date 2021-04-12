@@ -1,15 +1,51 @@
 User.create!({
   email: 'aaaa@gmail.com',
-  password: 'nigg1994',
-  password_confirmation: 'nigg1994'
+  password: 'test1234',
+  password_confirmation: 'test1234',
+  nickName: "nigg"
 })
 
 
 User.create!({
   email: 'test@gmail.com', 
-  password: 'nigg1994',
-  password_confirmation: 'nigg1994'
+  password: 'test1234',
+  password_confirmation: 'test1234',
+  nickName: "testTaro"
 })
+
+10.times do |n|
+  Portfolio.create!(
+    name: "User1の投稿",
+    background_of_creation: "hello world1",
+    remarkable_point: "hello world2",
+    future_issue: "hello world3",
+    url: "https://github.com/nakamori-naoya",
+    user_id: 1,   
+   )
+end
+
+10.times do |n|
+  Portfolio.create!(
+    name: "User2の投稿",
+    background_of_creation: "welcome to MudaBanashi",
+    remarkable_point: "Perfect Ruby on Rails",
+    future_issue: "SOLID",
+    url: "https://github.com/nakamori-naoya",
+    user_id: 2,   
+   )
+end
+
+10.times do |n|
+  Portfolio.create!(
+    name: "User2の投稿",
+    background_of_creation: "hello world1",
+    remarkable_point: "hello world2",
+    future_issue: "hello world3",
+    url: "https://github.com/nakamori-naoya",
+    user_id: 1,   
+   )
+end
+
 
 # Profile.create!({
 #   nickName: "Nigg",
@@ -24,38 +60,38 @@ User.create!({
 # })
 
 
-10.times do |n|
-    Blog.create!(
-      title: "User1の投稿",
-      text: "hello world",
-      user_id: 1,
-      image_data: "aa"   
-     )
-  end
+# 10.times do |n|
+#     Blog.create!(
+#       title: "User1の投稿",
+#       text: "hello world",
+#       user_id: 1,
+#       image_data: "aa"   
+#      )
+#   end
 
-  10.times do |n|
-    Blog.create!(
-      title: "User2の投稿",
-      text: "User2だよ",
-      user_id: 2,
-      image_data: "aa"
-    )
-  end  
+#   10.times do |n|
+#     Blog.create!(
+#       title: "User2の投稿",
+#       text: "User2だよ",
+#       user_id: 2,
+#       image_data: "aa"
+#     )
+#   end  
 
-10.times do |n|
-    Comment.create!(
-      title: "Tweet1に紐づくUser1による投稿だよ",
-      text: "Hello#{n + 1}",
-      blog_id: 1,
-      user_id: 1
-    )
-end
+# 10.times do |n|
+#     Comment.create!(
+#       title: "Tweet1に紐づくUser1による投稿だよ",
+#       text: "Hello#{n + 1}",
+#       blog_id: 1,
+#       user_id: 1
+#     )
+# end
 
-10.times do |n|
-  Comment.create!(
-    title: "Tweet2に紐づくUser2による投稿だよ",
-    text: "Hello#{n + 1}",
-    blog_id: 2,
-    user_id: 2
-  )
-end
+# 10.times do |n|
+#   Comment.create!(
+#     title: "Tweet2に紐づくUser2による投稿だよ",
+#     text: "Hello#{n + 1}",
+#     blog_id: 2,
+#     user_id: 2
+#   )
+# end
