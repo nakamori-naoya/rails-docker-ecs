@@ -6,4 +6,5 @@ class Portfolio < ApplicationRecord
     validates :url, presence: true
     has_many_attached :images
     belongs_to :user
+    has_many :evals, dependent: :destroy
 end

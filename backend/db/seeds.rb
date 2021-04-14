@@ -60,14 +60,18 @@ end
 # })
 
 
-# 10.times do |n|
-#     Blog.create!(
-#       title: "User1の投稿",
-#       text: "hello world",
-#       user_id: 1,
-#       image_data: "aa"   
-#      )
-#   end
+10.times do |n|
+    Eval.create!(
+      sociality: 2.5,
+      usability: 2.0,
+      business_oriented: 1.5,
+      creativity: 2.0,
+      skill: 2.0,
+      comprehensive_evaluation: 2.0, 
+      user_id: 1,
+      portfolio_id: 1  
+     )
+  end
 
 #   10.times do |n|
 #     Blog.create!(
