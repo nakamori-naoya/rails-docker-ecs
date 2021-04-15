@@ -38,7 +38,6 @@ services:
     networks:
       app_net:
         ipv4_address: '172.20.0.3'
-
 networks:
   app_net:
     driver: bridge

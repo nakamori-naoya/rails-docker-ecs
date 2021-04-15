@@ -7,4 +7,5 @@ class Portfolio < ApplicationRecord
     has_many_attached :images
     belongs_to :user
     has_many :evals, dependent: :destroy
+    has_one :avg_eval, dependent: :destroy
 end

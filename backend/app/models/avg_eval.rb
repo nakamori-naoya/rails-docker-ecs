@@ -1,6 +1,9 @@
 class AvgEval < ApplicationRecord
+    belongs_to :portfolio
 
-   
+    def self.search_columns(number, condition, column) 
+        limit(number).order("#{condition} DESC").pluck(column)
+    end
 
 end
 
