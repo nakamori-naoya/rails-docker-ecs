@@ -4,12 +4,16 @@ class Api::V1::EvalsController < ApplicationController
     def create
       @eval = Eval.new(evals_params)
       if @eval.save
+        #ここの処理は単純にcreateにできない。
+        #Eval.whereでレコードが存在しているときはupdateにしないといけない。
         @evals = Eval.where(portfolio_id: params[:portfolio_id])
         array = [:sociality, :creativity, :usability, :business_oriented, :skill, :comprehensive_evaluation]
-        props = {portfolio_id: params[:portfolio_id], user_id: params[:user_id] }
-        args = {array: array, props: props, self: @evals}
-        values = @evals.average(args)        
-        AvgEval.create(values)
+        props = {portfolio_id: params[:portfolio_id]}
+        array.map { |column|
+            datas = @evals.pluck(column)
+           props[column] = datas.sum(0.0) / datas.length
+        }      
+        AvgEval.create(props)
       else
         response_internal_server_error
       end
