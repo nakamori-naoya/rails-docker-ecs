@@ -6,7 +6,10 @@ class User < ApplicationRecord
     has_secure_password
     has_many :portfolios, dependent: :destroy
     has_many :evals
-    validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }
-    validates :nickName,  length: { maximum: 16 }   
-    validates :password, presence: true , format: { with: VALID_PASSWORD_REGEX }
+    
+    validates :nickName,  length: { maximum: 16 }  
+    validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }, on: :create
+    validates :email, format: { with: VALID_EMAIL_REGEX }, on: :update, allow_blank: true 
+    validates :password, presence: true , format: { with: VALID_PASSWORD_REGEX }, on: :create
+    validates :password, format: { with: VALID_PASSWORD_REGEX }, on: :update, allow_blank: true
 end

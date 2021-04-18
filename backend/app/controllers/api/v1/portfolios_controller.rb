@@ -3,6 +3,7 @@ class Api::V1::PortfoliosController < ApplicationController
 
     def index
         #究極的に検索にもmatched_portfolios()のロジックは使えますね！！
+        #中森流のサービスオブジェクト使用ルールとして、複数のオブジェクトにまたがるビジネスロジックの記述とするか？？？？
         @new_arrival = Portfolio.limit(10).order("created_at DESC").includes(:user)
         @high_creativity = matched_portfolios(AvgEval.search_columns(10, "creativity", "portfolio_id".intern))
         @high_sociality = matched_portfolios(AvgEval.search_columns(10, "sociality", "portfolio_id".intern))

@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-    before_action :authenticate_user, except: [:create, :logout]
+    # before_action :authenticate_user, except: [:create, :logout]
 # curl -X "GET" "http://localhost:3000/api/v1/users" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTU2OTc4MTcsInN1YiI6MX0.HMjFKqWzMJW8Jy28aZWpjldHaMPsknWjZAh7UuX4rY0" -H "Content-Type: application/json"
 
     def index
@@ -26,6 +26,25 @@ class Api::V1::UsersController < ApplicationController
 
       def logout
         render json: {status: 200}
+      end
+
+      def update
+          user = User.find(params[:id])
+          user.image.attach(params[:image])
+          # if params[:image]
+          #   blob = ActiveStorage::Blob.create_after_upload!(
+          #   io: StringIO.new(decode(params[:image][:data]) + "\n"),
+          #   filename: params[:image][:name]
+          #         )
+          #   user.image.attach(blob)
+          # end
+          user.update(users_params)
+         @user=  User.find(params[:id])
+          render json: {status: 200, data: @user.image_blob }
+      end
+
+      def decode(str)
+          Base64.decode64(str.split(',').last)
       end
 
       private
