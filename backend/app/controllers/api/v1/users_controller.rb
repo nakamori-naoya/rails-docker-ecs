@@ -39,12 +39,10 @@ class Api::V1::UsersController < ApplicationController
           #   user.image.attach(blob)
           # end
           user.update(users_params)
-         @user=  User.find(params[:id])
-          render json: {status: 200, data: @user.image_blob }
-      end
-
-      def decode(str)
-          Base64.decode64(str.split(',').last)
+          
+          user=  User.find(params[:id])
+          @image = user.image.attached? ? user.attributes.merge({image: url_for(user.image)}) :user
+          render json: {status: 200, data: @image}
       end
 
       private
