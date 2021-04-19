@@ -3,8 +3,15 @@ class Api::V1::UsersController < ApplicationController
 # curl -X "GET" "http://localhost:3000/api/v1/users" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTU2OTc4MTcsInN1YiI6MX0.HMjFKqWzMJW8Jy28aZWpjldHaMPsknWjZAh7UuX4rY0" -H "Content-Type: application/json"
 
     def index
-        render json: {status: 200, data: current_user }
+        if current_user?
+          @image = current_user.image.attached? ? user.attributes.merge({image: url_for(current_user.image)}) :user
+          render json: {status: 200, user: current_user, image: @image}
+        else
+          response_not_found("user")
+        end
+        
     end
+
 
     def create
         @user = User.new(users_params)
@@ -31,15 +38,8 @@ class Api::V1::UsersController < ApplicationController
       def update
           user = User.find(params[:id])
           user.image.attach(params[:image])
-          # if params[:image]
-          #   blob = ActiveStorage::Blob.create_after_upload!(
-          #   io: StringIO.new(decode(params[:image][:data]) + "\n"),
-          #   filename: params[:image][:name]
-          #         )
-          #   user.image.attach(blob)
-          # end
           user.update(users_params)
-          
+
           user=  User.find(params[:id])
           @image = user.image.attached? ? user.attributes.merge({image: url_for(user.image)}) :user
           render json: {status: 200, data: @image}
