@@ -1,10 +1,10 @@
 class Api::V1::UsersController < ApplicationController
-    before_action :authenticate_user, except: [:create, :logout]
+    before_action :authenticate_user, except: [:create, :logout, :destroy]
 # curl -X "GET" "http://localhost:3000/api/v1/users" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTU2OTc4MTcsInN1YiI6MX0.HMjFKqWzMJW8Jy28aZWpjldHaMPsknWjZAh7UuX4rY0" -H "Content-Type: application/json"
 
     def index
-          @user = current_user.image.attached? ? current_user.attributes.merge({image: url_for(current_user.image)}) :current_user
-          render json: {status: 200, data: response_fields(@user.to_json)}
+       @user = current_user.image.attached? ? current_user.attributes.merge({image: url_for(current_user.image)}) : current_user
+       render json: {status: 200, data: response_fields(@user.to_json)}
     end
 
 
@@ -21,10 +21,6 @@ class Api::V1::UsersController < ApplicationController
           end
         end
 
-        # def show
-        #   user = current_user
-        #   render json: {status: 200, data: current_user.to_json }
-        # end
 
       def logout
         render json: {status: 200}
@@ -33,8 +29,15 @@ class Api::V1::UsersController < ApplicationController
       def update
           previous_user = User.find(params[:id]) 
           previous_user.update(users_params)
-          @user = current_user.image.attached? ? current_user.attributes.merge({image: url_for(current_user.image)}) :current_user
+          @user = current_user.image.attached? ? current_user.attributes.merge({image: url_for(current_user.image)}) : current_user
           render json: {status: 200, data: response_fields(@user.to_json)}
+      end
+
+      
+      def destroy
+        user = User.find(params[:id]) 
+        user.destroy
+        render json: {status: 200}
       end
 
       private
@@ -44,7 +47,7 @@ class Api::V1::UsersController < ApplicationController
 
       def response_fields(user_json)
         user_parse = JSON.parse(user_json)
-        user_parse.except('created_at', 'updated_at', 'email' ,'password_digest')
+        user_parse.except('created_at', 'email' ,'password_digest')
       end
 
 end
