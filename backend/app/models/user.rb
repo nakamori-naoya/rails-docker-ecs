@@ -6,7 +6,8 @@ class User < ApplicationRecord
     has_secure_password
     has_many :portfolios, dependent: :destroy
     has_many :evals
-    
+    has_many :chats
+
     validates :nickName,  length: { maximum: 16 }  
     validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }, on: :create
     validates :email, format: { with: VALID_EMAIL_REGEX }, on: :update, allow_blank: true 

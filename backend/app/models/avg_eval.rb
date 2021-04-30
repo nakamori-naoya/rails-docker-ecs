@@ -5,6 +5,19 @@ class AvgEval < ApplicationRecord
         limit(number).order("#{condition} DESC").pluck(column)
     end
 
+    #各カラムの平均値の計算
+    def self.calcurate_avg(array, props, others)
+        array.map { |data|
+            datas = others.pluck(data)
+        props[data] = datas.sum(0.0) / datas.length
+        }
+        return props
+    end
+
+    
+
+
+
 end
 
 #おそらくvalidationやコールバックはほとんど必要がない 

@@ -6,6 +6,16 @@ class Portfolio < ApplicationRecord
     validates :url, presence: true
     has_many_attached :images
     belongs_to :user
+    has_many :chats, dependent: :destroy
     has_many :evals, dependent: :destroy
     has_one :avg_eval, dependent: :destroy
+
+
+    def self.matched_portfolios(ids)
+        array = []
+        ids.map{ |id|
+            array.push(self.find(id)) 
+            } 
+        return array
+    end
 end

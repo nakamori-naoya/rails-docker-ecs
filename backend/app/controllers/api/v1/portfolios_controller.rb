@@ -3,14 +3,31 @@ class Api::V1::PortfoliosController < ApplicationController
 
     def index
         #究極的に検索にもmatched_portfolios()のロジックは使えますね！！
-        #中森流のサービスオブジェクト使用ルールとして、複数のオブジェクトにまたがるビジネスロジックの記述とするか？？？？
+        #中森流のサービスオブジェクト使用ルールとして、複数のオブジェクトにまたがるビジネスロジックの記述
         @new_arrival = Portfolio.limit(10).order("created_at DESC").includes(:user)
-        @high_creativity = matched_portfolios(AvgEval.search_columns(10, "creativity", "portfolio_id".intern))
-        @high_sociality = matched_portfolios(AvgEval.search_columns(10, "sociality", "portfolio_id".intern))
-        @high_skill = matched_portfolios(AvgEval.search_columns(10, "skill", "portfolio_id".intern))
-        @high_usability = matched_portfolios(AvgEval.search_columns(10, "usability", "portfolio_id".intern))
-        @high_business_oriented = matched_portfolios(AvgEval.search_columns(10, "business_oriented", "portfolio_id".intern))
-        @high_comprehensive_evaluation = matched_portfolios(AvgEval.search_columns(10, "comprehensive_evaluation", "portfolio_id".intern))
+        @high_creativity = Portfolio.matched_portfolios(AvgEval.search_columns(10, 
+                                                            "creativity", 
+                                                            "portfolio_id".intern)
+                                                        )
+        @high_sociality = Portfolio.matched_portfolios(AvgEval.search_columns(10, 
+                                                            "sociality", 
+                                                            "portfolio_id".intern)
+                                                        )
+        @high_skill = Portfolio.matched_portfolios(AvgEval.search_columns(10, 
+                                                            "skill", 
+                                                            "portfolio_id".intern)
+                                                        )
+        @high_usability = Portfolio.matched_portfolios(AvgEval.search_columns(10, 
+                                                            "usability", 
+                                                            "portfolio_id".intern)
+                                                        )
+        @high_business_oriented = Portfolio.matched_portfolios(AvgEval.search_columns(10, 
+                                                            "business_oriented", 
+                                                            "portfolio_id".intern)
+                                                        )
+        @high_comprehensive_evaluation = Portfolio.matched_portfolios(AvgEval.search_columns(10, 
+                                                            "comprehensive_evaluation", 
+                                                            "portfolio_id".intern))
         render json: {status: 200, 
                       newArrival: @new_arrival, 
                       highCreativity: @high_creativity,
@@ -27,11 +44,9 @@ class Api::V1::PortfoliosController < ApplicationController
         #引数で送られてきた数字と評価項目のポートフォリオを返す関数にしたい
     end
 
-    def matched_portfolios(ids)
-        array = []
-        ids.map{ |id|
-            array.push(Portfolio.find(id)) 
-            } 
-        return array
+    
+    private
+    def portfolios_params
+      params.permit()
     end
 end

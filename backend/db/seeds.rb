@@ -73,6 +73,22 @@ end
      )
   end
 
+  10.times do |n|
+    Chat.create!(
+      text: "hello#{n + 1}",
+      user_id: 1,
+      portfolio_id: 1  
+     )
+  end
+
+  10.times do |n|
+    Chat.create!(
+      text: "hello#{n + 1}",
+      user_id: 2,
+      portfolio_id: 2  
+     )
+  end
+
 #   10.times do |n|
 #     Blog.create!(
 #       title: "User2の投稿",

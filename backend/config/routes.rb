@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       resources :users 
       resources :portfolios do
         resources :evals
+        resources :chats
       end
     end
   end
