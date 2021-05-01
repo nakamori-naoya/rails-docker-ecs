@@ -5,7 +5,8 @@ class Api::V1::ChatsController < ApplicationController
       @chats = Chat.where(portfolio_id: params[:portfolio_id]).includes(:user)
         array = []
         @chats.map{ |chat|
-            array.push(user_fields(chat.user.to_json)) 
+            user = chat.user.image.attached? ? chat.user.attributes.merge({image: url_for(chat.user.image)}) : chat.user
+            array.push(user_fields(user.to_json)) 
             } 
       render json: {status: 200, data: @chats, user: array}
     end
@@ -18,7 +19,6 @@ class Api::V1::ChatsController < ApplicationController
        #saveできなかった時の処理
        
       end
-
     end
 
 
