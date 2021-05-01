@@ -32,3 +32,4 @@ class Api::V1::ChatsController < ApplicationController
         user_parse.except('created_at', 'email' ,'password_digest')
     end
 end
+
