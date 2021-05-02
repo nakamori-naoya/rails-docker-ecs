@@ -1,8 +1,11 @@
 class Api::V1::ChatsController < ApplicationController
-    before_action :authenticate_user, except: [:index]
+    before_action :authenticate_user, except: [:index, :create]
 
     def index
       @chats = Chat.where(portfolio_id: params[:portfolio_id]).includes(:user)
+
+        #単純にincludes(:user)したものをReeactに渡しても、使えないので以下の処理。
+        #サービスオブジェクトにするかは、いったん保留
         array = []
         @chats.map{ |chat|
             user = chat.user.image.attached? ? chat.user.attributes.merge({image: url_for(chat.user.image)}) : chat.user
@@ -17,7 +20,6 @@ class Api::V1::ChatsController < ApplicationController
         render json: {status: 201, data: @chat}
       else
        #saveできなかった時の処理
-       
       end
     end
 

@@ -1,5 +1,5 @@
 class Api::V1::PortfoliosController < ApplicationController
-    before_action :authenticate_user, except: [:index]
+    before_action :authenticate_user, except: [:index, :show]
 
     def index
         #究極的に検索にもmatched_portfolios()のロジックは使えますね！！
@@ -45,8 +45,14 @@ class Api::V1::PortfoliosController < ApplicationController
     end
 
     
+    def show
+        @portfolio = Portfolio.find(params[:id])
+        render json: {status: 200, data: @portfolio}
+    end
+
+
     private
     def portfolios_params
-      params.permit()
+      params.permit(:id)
     end
 end
