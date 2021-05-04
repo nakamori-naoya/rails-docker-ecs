@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       resources :portfolios do
         resources :evals
         resources :chats
+        resource :avg_evals
       end
     end
   end

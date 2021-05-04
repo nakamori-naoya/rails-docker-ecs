@@ -6,13 +6,16 @@ class AvgEval < ApplicationRecord
     end
 
     #各カラムの平均値の計算
-    def self.calcurate_avg(array, props, others)
-        array.map { |data|
-            datas = others.pluck(data)
-        props[data] = datas.sum(0.0) / datas.length
+    def self.avg(props, record , other )
+        colums = [:sociality, :creativity, :usability, :business_oriented, :skill, :comprehensive_evaluation]
+        colums.map { |data|
+            datas = record.pluck(data)
+            arrival = other[data] 
+            props[data] = (datas.sum(0.0) + arrival)/ (datas.length + 1 )
         }
         return props
     end
+
 
     
 
