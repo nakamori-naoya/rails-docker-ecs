@@ -35,16 +35,6 @@ end
    )
 end
 
-10.times do |n|
-  Portfolio.create!(
-    name: "User2の投稿",
-    background_of_creation: "hello world1",
-    remarkable_point: "hello world2",
-    future_issue: "hello world3",
-    url: "https://github.com/nakamori-naoya",
-    user_id: 1,   
-   )
-end
 
 
 # Profile.create!({
@@ -69,7 +59,48 @@ end
       skill: 2.0,
       comprehensive_evaluation: 2.0, 
       user_id: 1,
-      portfolio_id: 1  
+      portfolio_id: n + 1
+     )
+  end
+
+  10.times do |n|
+    Eval.create!(
+      sociality: 2.5,
+      usability: 2.0,
+      business_oriented: 1.5,
+      creativity: 2.0,
+      skill: 2.0,
+      comprehensive_evaluation: 2.0, 
+      user_id: 2,
+      portfolio_id: n + 11  
+     )
+  end
+
+
+
+  10.times do |n|
+    AvgEval.create!(
+      sociality: 2.5,
+      usability: 2.0,
+      business_oriented: 1.5,
+      creativity: 2.0,
+      skill: 2.0,
+      comprehensive_evaluation: 2.0, 
+      user_id: 1,
+      portfolio_id: n + 1
+     )
+  end
+
+  10.times do |n|
+    AvgEval.create!(
+      sociality: 2.5,
+      usability: 2.0,
+      business_oriented: 1.5,
+      creativity: 2.0,
+      skill: 2.0,
+      comprehensive_evaluation: 2.0, 
+      user_id: 1,
+      portfolio_id: n + 11
      )
   end
 

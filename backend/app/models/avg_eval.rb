@@ -16,11 +16,6 @@ class AvgEval < ApplicationRecord
         return props
     end
 
-
-    
-
-
-
 end
 
 #おそらくvalidationやコールバックはほとんど必要がない 

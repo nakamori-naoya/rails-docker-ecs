@@ -4,7 +4,7 @@ class Api::V1::PortfoliosController < ApplicationController
     def index
         #究極的に検索にもmatched_portfolios()のロジックは使えますね！！
         #中森流のサービスオブジェクト使用ルールとして、複数のオブジェクトにまたがるビジネスロジックの記述
-        @new_arrival = Portfolio.limit(10).order("created_at DESC").includes(:user)
+        @new_arrival = Portfolio.limit(10).order("created_at DESC")
         @high_creativity = Portfolio.matched_portfolios(AvgEval.search_columns(10, 
                                                             "creativity", 
                                                             "portfolio_id".intern)
@@ -48,6 +48,7 @@ class Api::V1::PortfoliosController < ApplicationController
     def show
         @portfolio = Portfolio.find(params[:id])
         render json: {status: 200, data: @portfolio}
+
     end
 
 
