@@ -14,10 +14,11 @@ class Api::V1::ChatsController < ApplicationController
       render json: {status: 200, data: @chats, user: array}
     end
 
+    
     def create
       @chat = Chat.new(chats_params)
       if @chat.save
-        render json: {status: 201, data: @chat}
+        render json: {status: 201, data: @chat , user: @chat.user}
       else
        #saveできなかった時の処理
       end
