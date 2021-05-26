@@ -8,7 +8,6 @@ class CreateAvgEvals < ActiveRecord::Migration[6.0]
       t.float :skill, null: false
       t.float :comprehensive_evaluation, null: false
       t.references :portfolio, forein_key: true
-      t.references :user, forein_key: true #要らなくない？？
       t.timestamps
     end
   end

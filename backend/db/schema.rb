@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_29_123404) do
+ActiveRecord::Schema.define(version: 2021_05_24_113818) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -46,16 +46,6 @@ ActiveRecord::Schema.define(version: 2021_04_29_123404) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["portfolio_id"], name: "index_avg_evals_on_portfolio_id"
     t.index ["user_id"], name: "index_avg_evals_on_user_id"
-  end
-
-  create_table "blogs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.string "title"
-    t.string "text"
-    t.text "image_data"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_blogs_on_user_id"
   end
 
   create_table "chats", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -95,10 +85,20 @@ ActiveRecord::Schema.define(version: 2021_04_29_123404) do
     t.index ["user_id"], name: "index_portfolios_on_user_id"
   end
 
+  create_table "profiles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "nickname", null: false
+    t.text "description"
+    t.date "programming_start_date", null: false
+    t.string "web_site_url"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_profiles_on_user_id"
+  end
+
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "password_digest"
     t.string "email", null: false
-    t.string "nickName"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
