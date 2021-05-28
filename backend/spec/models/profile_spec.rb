@@ -38,7 +38,7 @@ RSpec.describe Profile, type: :model do
       it "画像としてpng,jpg,jpeg以外のファイルをアップロードした時" do
         @profile.image = fixture_file_upload('app/assets/images/sample.md')
         @profile.valid?
-        expect(@non_image_profile.errors.full_messages).to include("ImageのContent Typeが不正です")
+        expect(@profile.errors.full_messages).to include("ImageのContent Typeが不正です")
       end
     end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_24_113818) do
+ActiveRecord::Schema.define(version: 2021_05_27_111324) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -41,11 +41,15 @@ ActiveRecord::Schema.define(version: 2021_05_24_113818) do
     t.float "skill", null: false
     t.float "comprehensive_evaluation", null: false
     t.bigint "portfolio_id"
-    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["portfolio_id"], name: "index_avg_evals_on_portfolio_id"
-    t.index ["user_id"], name: "index_avg_evals_on_user_id"
+  end
+
+  create_table "categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "chats", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -73,14 +77,22 @@ ActiveRecord::Schema.define(version: 2021_05_24_113818) do
     t.index ["user_id"], name: "index_evals_on_user_id"
   end
 
+  create_table "portfolio_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "portfolio_id"
+    t.bigint "category_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_portfolio_categories_on_category_id"
+    t.index ["portfolio_id"], name: "index_portfolio_categories_on_portfolio_id"
+  end
+
   create_table "portfolios", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "name", null: false
-    t.text "background_of_creation"
-    t.text "remarkable_point"
-    t.text "future_issue"
-    t.text "url", null: false
+    t.string "title", null: false
+    t.text "description"
+    t.text "site_url", null: false
+    t.text "github_url"
     t.bigint "user_id"
     t.index ["user_id"], name: "index_portfolios_on_user_id"
   end
