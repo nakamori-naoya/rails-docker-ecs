@@ -3,15 +3,16 @@ class Api::V1::EvalsController < ApplicationController
 
     def create
       @eval = Eval.new(evals_params)
+      portfolio_id = {portfolio_id: params[:portfolio_id]}
       if @eval.save
-        if AvgEval.exists?(portfolio_id: params[:portfolio_id])
-           props = {portfolio_id: params[:portfolio_id]}
-           avg_params = AvgEval.avg(props, Eval.where(portfolio_id: params[:portfolio_id]), @eval)
-           @avg_eval = AvgEval.find_by(portfolio_id: params[:portfolio_id],)
-           @avg_eval.update(avg_params)
-           render json: {status: 200, data: avg_eval_fields(@avg_eval.to_json)}
+        #イメージの処理 avg_eval = AvgEval.new して avg_eval.calcurate(portfolio_id, Eval.where(portfolio_id), @eval)
+        if AvgEval.exists?(portfolio_id)
+          avg_params = AvgEval.calcurate(portfolio_id, Eval.where(portfolio_id), @eval)
+          @old_avg_eval = AvgEval.find_by(portfolio_id)
+          @avg_eval =  @old_avg_eval.update(avg_params)
+          render json: {status: 200, data: avg_eval_fields(@avg_eval.to_json)}
         else
-          @avg_eval =   @AvgEval.create(evals_params)  #新規作成の場合
+          @avg_eval =   AvgEval.create(evals_params)  #新規作成の場合
           render json: {status: 201, data: avg_eval_fields(@avg_eval.to_json)}
         end
       else
@@ -19,9 +20,9 @@ class Api::V1::EvalsController < ApplicationController
       end
     end
 
-   def update 
+    def update 
 
-   end
+    end
 
 
     private

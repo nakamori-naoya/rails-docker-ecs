@@ -1,34 +1,28 @@
 class PortfolioCategoryForm
-
   include ActiveModel::Model
   attr_accessor :title, :description, :site_url, :github_url, :name, :images, :user_id
 
   with_options presence: true do
-    validates :title
-    validates :description
+    validates :title, length: { in: 1..30 }
+    validates :description ,length: { in: 1..400 }
     validates :site_url
     validates :github_url
-    validates :name
-    validates :user_id
+    validates :name,  length: { in: 1..20 }
   end
 
   def save
-    portfolio = Portfolio.create(title: title, description: description, 
-                                site_url: site_url, github_url: github_url, 
-                                user_id: user_id, images: images)
-    category = Category.where(name: name).first_or_initialize
-    category.save
-    PortfolioCategory.create(portfolio_id: portfolio.id, category_id: category.id)
+    ActiveRecord::Base.transaction do
+        portfolio = Portfolio.create!(
+          title: title, description: description, 
+          site_url: site_url, github_url: github_url, 
+          user_id: user_id, images: images
+        )
+        #複数のカテゴリを追加する時はここで、mapを回せばいいのか？？ 
+        #おそらくparamsとしてnames: []で送りnamesをmapで回す
+        category = Category.where(name: name).first_or_initialize  
+        category.save!
+        PortfolioCategory.create!(portfolio_id: portfolio.id, category_id: category.id)
+    end
   end
-
-  private
-
-  # def portfolios_params
-  #   params.permit(:title, :description, :site_url, :github_url)
-  # end
-
-  # def category_params
-  #   params.permit(:title, :description, :site_url, :github_url)
-  # end
 
 end

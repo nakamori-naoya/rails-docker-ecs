@@ -5,7 +5,17 @@
   )
 end
 
-
+# 10.times do |n|
+#     Profile.create!(
+#     nickname: Faker::Name.unique.name,
+#     description: Faker::Lorem.characters(number: 400),
+#     programming_start_date: Faker::Date.between(from: '1900-01-01', to: '2021-12-31'),
+#     web_site_url: Faker::Lorem.sentence,
+#     # image: ActiveStorage::Blob.create_and_upload!(io: File.open("/app/assets/images/DHH.jpeg")),
+#     #image: open("./db/fixtures/ruby.svg"),
+#     user_id: n + 1,
+#     )
+# end
 
 # 10.times do |n|
 #   Profile.create!(
@@ -29,16 +39,16 @@ end
 #    )
 # end
 
-# 10.times do |n|
-#   Portfolio.create!(
-#     name: "User2の投稿",
-#     background_of_creation: "welcome to MudaBanashi",
-#     remarkable_point: "Perfect Ruby on Rails",
-#     future_issue: "SOLID",
-#     url: "https://github.com/nakamori-naoya",
-#     user_id: 2,   
-#    )
-# end
+
+10.times do |n|
+  Portfolio.create!(
+    title: "User2の投稿",
+    description: "ajfafa",
+    site_url: "https://github.com/nakamori-naoya",
+    github_url: "https://github.com/nakamori-naoya",
+    user_id: 2,   
+    )
+end
 
 
 
@@ -55,18 +65,18 @@ end
 # # })
 
 
-# 10.times do |n|
-#     Eval.create!(
-#       sociality: 2.5,
-#       usability: 2.0,
-#       business_oriented: 1.5,
-#       creativity: 2.0,
-#       skill: 2.0,
-#       comprehensive_evaluation: 2.0, 
-#       user_id: 1,
-#       portfolio_id: n + 1
-#      )
-#   end
+10.times do |n|
+    Eval.create!(
+      sociality: 2.5,
+      usability: 2.0,
+      business_oriented: 1.5,
+      creativity: 2.0,
+      skill: 2.0,
+      comprehensive_evaluation: 2.0, 
+      user_id: 1,
+      portfolio_id: n + 1
+      )
+  end
 
 #   10.times do |n|
 #     Eval.create!(
@@ -83,18 +93,17 @@ end
 
 
 
-#   10.times do |n|
-#     AvgEval.create!(
-#       sociality: 2.5,
-#       usability: 2.0,
-#       business_oriented: 1.5,
-#       creativity: 2.0,
-#       skill: 2.0,
-#       comprehensive_evaluation: 2.0, 
-#       user_id: 1,
-#       portfolio_id: n + 1
-#      )
-#   end
+  10.times do |n|
+    AvgEval.create!(
+      sociality: 2.5,
+      usability: 2.0,
+      business_oriented: 1.5,
+      creativity: 2.0,
+      skill: 2.0,
+      comprehensive_evaluation: 2.0, 
+      portfolio_id: n + 1
+      )
+  end
 
 #   10.times do |n|
 #     AvgEval.create!(

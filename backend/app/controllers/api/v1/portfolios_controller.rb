@@ -29,16 +29,24 @@ class Api::V1::PortfoliosController < ApplicationController
                                                             "comprehensive_evaluation", 
                                                             "portfolio_id".intern))
         render json: {status: 200, 
-                      newArrival: @new_arrival, 
-                      highCreativity: @high_creativity,
-                      highSociality:  @high_sociality,
-                      highSkill: @high_skill,
-                      highUsability: @high_usability,
-                      highBusinessOriented: @high_business_oriented,
-                      highComprehensiveEvaluation: @high_comprehensive_evaluation
-                    }
+                    newArrival: @new_arrival, 
+                    highCreativity: @high_creativity,
+                    highSociality:  @high_sociality,
+                    highSkill: @high_skill,
+                    highUsability: @high_usability,
+                    highBusinessOriented: @high_business_oriented,
+                    highComprehensiveEvaluation: @high_comprehensive_evaluation
+                }
     end
-    
+
+    def create
+        @portfolio_category_form = PortfolioCategoryForm.new(portfolios_params)
+        if @portfolio_category_form.save!
+            #値を返す
+        else
+            #エラーコードを送る
+        end
+    end
 
     def search
         #引数で送られてきた数字と評価項目のポートフォリオを返す関数にしたい
@@ -48,12 +56,11 @@ class Api::V1::PortfoliosController < ApplicationController
     def show
         @portfolio = Portfolio.find(params[:id])
         render json: {status: 200, data: @portfolio}
-
     end
 
 
     private
     def portfolios_params
-      params.permit(:id)
+        params.permit(:title, :description, :site_url, :github_url, :name, :images, :user_id)
     end
 end
