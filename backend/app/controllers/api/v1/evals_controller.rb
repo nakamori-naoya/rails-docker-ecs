@@ -4,6 +4,10 @@ class Api::V1::EvalsController < ApplicationController
     def create
       @eval = Eval.new(evals_params)
       portfolio_id = {portfolio_id: params[:portfolio_id]}
+      
+      @eval = Eval.first
+      portfolio_id = {portfolio_id: 1}
+
       if @eval.save
         #イメージの処理 avg_eval = AvgEval.new して avg_eval.calcurate(portfolio_id, Eval.where(portfolio_id), @eval)
         if AvgEval.exists?(portfolio_id)
