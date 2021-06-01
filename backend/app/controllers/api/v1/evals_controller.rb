@@ -11,9 +11,9 @@ class Api::V1::EvalsController < ApplicationController
       if @eval.save
         #イメージの処理 avg_eval = AvgEval.new して avg_eval.calcurate(portfolio_id, Eval.where(portfolio_id), @eval)
         if AvgEval.exists?(portfolio_id)
+          @avg_eval = AvgEval.find_by(portfolio_id)
           avg_params = AvgEval.calcurate(portfolio_id, Eval.where(portfolio_id), @eval)
-          @old_avg_eval = AvgEval.find_by(portfolio_id)
-          @avg_eval =  @old_avg_eval.update(avg_params)
+          @avg_eval.update(avg_params)
           render json: {status: 200, data: avg_eval_fields(@avg_eval.to_json)}
         else
           @avg_eval =   AvgEval.create(evals_params)  #新規作成の場合
