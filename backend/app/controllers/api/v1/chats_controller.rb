@@ -2,25 +2,28 @@ class Api::V1::ChatsController < ApplicationController
     before_action :authenticate_user, except: [:index, :create]
 
     def index
-      @chats = Chat.where(portfolio_id: params[:portfolio_id]).includes(:user)
-
-        #単純にincludes(:user)したものをReeactに渡しても、使えないので以下の処理。
+      @chats = Chat.includes(:user).profile.where(portfolio_id: params[:portfolio_id])
+      @chats = Chat.includes(user: :profile).where(portfolio_id: 1)
+        #単純にincludes(:user)したものをReactに渡しても、使えないので以下の処理。
         #サービスオブジェクトにするかは、いったん保留
-        array = []
-        @chats.map{ |chat|
-            user = chat.user.image.attached? ? chat.user.attributes.merge({image: url_for(chat.user.image)}) : chat.user
-            array.push(user_fields(user.to_json)) 
-            } 
-      render json: {status: 200, data: @chats, user: array}
+      @chats_with_user_profile = @chats.map {|chat|
+          profile = chat.user.profile.image.attached? ? chat.user.profile.attributes.merge({image: url_for(chat.user.profile.image)}) : chat.user.profile
+          profile_hash = profile.attributes
+          chat_hash = chat.attributes
+          chat_hash.merge(profile_hash)
+          
+      }
+      render json: {status: 200, data: @chats_with_user_profile}
     end
 
     
     def create
       @chat = Chat.new(chats_params)
+      #@chat = Chat.new({text: "aaaa", user_id: 1, portfolio_id: 1})
       if @chat.save
         render json: {status: 201, data: @chat , user: @chat.user}
       else
-       #saveできなかった時の処理
+        #saveできなかった時の処理
       end
     end
 

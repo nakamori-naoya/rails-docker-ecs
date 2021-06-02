@@ -5,17 +5,17 @@
   )
 end
 
-# 10.times do |n|
-#     Profile.create!(
-#     nickname: Faker::Name.unique.name,
-#     description: Faker::Lorem.characters(number: 400),
-#     programming_start_date: Faker::Date.between(from: '1900-01-01', to: '2021-12-31'),
-#     web_site_url: Faker::Lorem.sentence,
-#     # image: ActiveStorage::Blob.create_and_upload!(io: File.open("/app/assets/images/DHH.jpeg")),
-#     #image: open("./db/fixtures/ruby.svg"),
-#     user_id: n + 1,
-#     )
-# end
+10.times do |n|
+    Profile.create!(
+    nickname: Faker::Name.unique.name,
+    description: Faker::Lorem.characters(number: 400),
+    programming_start_date: Faker::Date.between(from: '1900-01-01', to: '2021-12-31'),
+    web_site_url: Faker::Lorem.sentence,
+    # image: ActiveStorage::Blob.create_and_upload!(io: File.open("/app/assets/images/DHH.jpeg")),
+    #image: open("./db/fixtures/ruby.svg"),
+    user_id: n + 1,
+    )
+end
 
 # 10.times do |n|
 #   Profile.create!(
@@ -49,8 +49,6 @@ end
     user_id: 2,   
     )
 end
-
-
 
 # # Profile.create!({
 # #   nickName: "Nigg",
@@ -118,21 +116,21 @@ end
 #      )
 #   end
 
-#   10.times do |n|
-#     Chat.create!(
-#       text: "hello#{n + 1}",
-#       user_id: 1,
-#       portfolio_id: 1  
-#      )
-#   end
+  10.times do |n|
+    Chat.create!(
+      text: "hello#{n + 1}",
+      user_id: 1,
+      portfolio_id: 1  
+      )
+  end
 
-#   10.times do |n|
-#     Chat.create!(
-#       text: "hello#{n + 1}",
-#       user_id: 2,
-#       portfolio_id: 2  
-#      )
-#   end
+  10.times do |n|
+    Chat.create!(
+      text: "hello#{n + 1}",
+      user_id: 2,
+      portfolio_id: 2  
+      )
+  end
 
 # #   10.times do |n|
 # #     Blog.create!(
