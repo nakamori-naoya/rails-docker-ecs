@@ -12,7 +12,7 @@ class Api::V1::EvalsController < ApplicationController
         #イメージの処理 avg_eval = AvgEval.new して avg_eval.calcurate(portfolio_id, Eval.where(portfolio_id), @eval)
         if AvgEval.exists?(portfolio_id)
           @avg_eval = AvgEval.find_by(portfolio_id)
-          avg_params = AvgEval.calcurate(portfolio_id, Eval.where(portfolio_id), @eval)
+          avg_params = AvgEval.calcurate({existing_records: Eval.where(portfolio_id),  new_arrival: @eval })
           @avg_eval.update(avg_params)
           render json: {status: 200, data: avg_eval_fields(@avg_eval.to_json)}
         else

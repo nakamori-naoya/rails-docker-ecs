@@ -6,13 +6,14 @@ class AvgEval < ApplicationRecord
     end
 
     #各カラムの平均値の計算
-    def self.calcurate(portfolio_id, records, other)
-        avg_eval = portfolio_id
+    def self.calcurate(args)
+        existing_records = args[:existing_records] 
+        new_arrival = args[:new_arrival] 
         attributes = delete_attributes_from(convert_attributes_to_array)
-        attributes.map { |attribute|
-            calcurate_avg(attribute, records.pluck(attribute), avg_eval, other[attribute] )
-        }
-        return avg_eval
+        avg_params = attributes.map { |attribute|
+            calcurate_avg(attribute, existing_records.pluck(attribute),  new_arrival[attribute] )
+            }
+        avg_params
     end
 
 
@@ -28,8 +29,10 @@ class AvgEval < ApplicationRecord
         return new_attributes
     end
 
-    def self.calcurate_avg(attribute, datas ,hash, new_arrival)     
-        hash[attribute] = (datas.sum(0.0) + new_arrival) / (datas.length + 1 )
+    def self.calcurate_avg(attribute, datas , new_arrival)    
+        avg_params = {}
+        avg_params[attribute] = (datas.sum(0.0) + new_arrival) / (datas.length + 1 )
+        avg_params
     end
         
 
