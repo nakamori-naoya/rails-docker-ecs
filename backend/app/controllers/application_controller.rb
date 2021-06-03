@@ -29,4 +29,19 @@ class ApplicationController < ActionController::API
   def response_internal_server_error
     render status: 500, json: { status: 500, message: 'Internal Server Error' }
   end
+
+  #applicationControllerに写す
+  def except_records_fields(datas, except_keywords_in_array)
+    result = datas.map{|data|
+      except_fields(data.to_json() , except_keywords_in_array)
+    }
+    result
+  end
+
+
+  def except_fields(a_json_data, except_keywords_in_array) 
+      parsed_data = JSON.parse(a_json_data)
+      result = parsed_data.except(*except_keywords_in_array)
+      result
+  end 
 end
