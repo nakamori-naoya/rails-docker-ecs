@@ -38,7 +38,8 @@ class Api::V1::PortfoliosController < ApplicationController
                     highComprehensiveEvaluation: @high_comprehensive_evaluation
                 }
     end
-
+    
+    #カテゴリは複数投稿できるので、配列で送られてくるはず。なので、PortfolioCategoryFormの処理で工夫が必要
     def create
         @portfolio_category_form = PortfolioCategoryForm.new(portfolios_params)
         if @portfolio_category_form.save!

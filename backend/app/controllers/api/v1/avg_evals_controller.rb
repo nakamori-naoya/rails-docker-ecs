@@ -15,5 +15,5 @@ class Api::V1::AvgEvalsController < ApplicationController
         avg_eval_parse = JSON.parse(avg_eval_json)
         avg_eval_parse.except('id','user_id','created_at', 'updated_at')
     end
-  
+    
 end

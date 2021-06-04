@@ -12,7 +12,7 @@ class Api::V1::ChatsController < ApplicationController
     
     def create
       @chat = Chat.new(chats_params)
-      @chat= Chat.first
+      # @chat= Chat.first
       #@chat = Chat.new({text: "aaaa", user_id: 1, portfolio_id: 1})
       if @chat.save
         @chat_with_user_profile = chat_with_user_profile(@chat)
@@ -29,15 +29,16 @@ class Api::V1::ChatsController < ApplicationController
     end
 
     
-    def except_records_fields(datas, except_keywords_in_array)
-      result = datas.map{|data|
-        except_fields(data.to_json() , except_keywords_in_array)
+    def except_records_fields(records, except_keywords_in_array)
+      result = records.map{|record|
+        except_fields(record, except_keywords_in_array)
       }
       result
     end
 
 
-    def except_fields(a_json_data, except_keywords_in_array) 
+    def except_fields(a_record, except_keywords_in_array) 
+        a_json_data = a_record.to_json()
         parsed_data = JSON.parse(a_json_data)
         result = parsed_data.except(*except_keywords_in_array)
         result
