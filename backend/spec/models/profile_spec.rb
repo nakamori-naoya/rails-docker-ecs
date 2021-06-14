@@ -26,9 +26,9 @@ RSpec.describe Profile, type: :model do
         expect(@profile.errors.full_messages).to include("Nicknameは20文字以内で入力してください")
       end
       it "説明文が400文字を超えるとき" do
-        @profile.description = @profile.description.concat("Hello World")
+        @profile.self_introductionn = @profile.self_introductionn.concat("Hello World")
         @profile.valid?
-        expect(@profile.errors.full_messages).to include("Descriptionは400文字以内で入力してください")
+        expect(@profile.errors.full_messages).to include("SelfIntroductionnは400文字以内で入力してください")
       end
       it "画像の添付がされていない時" do
         @non_image_profile = FactoryBot.build(:profile)
@@ -44,7 +44,7 @@ RSpec.describe Profile, type: :model do
 
     context "プロフィールが登録できるとき(正常系)" do
       it "ニックネームとプログラミング開始月の入力と画像の添付があれば投稿できる" do
-        @profile.description = ""
+        @profile.self_introductionn = ""
         @profile.web_site_url = ""  
         expect(@profile).to be_valid
       end

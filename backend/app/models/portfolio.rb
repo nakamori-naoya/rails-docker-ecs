@@ -11,13 +11,4 @@ class Portfolio < ApplicationRecord
     has_one :avg_eval, dependent: :destroy
     has_many :portfolio_categories
     has_many :categories, through: :portfolio_categories
-
-
-    def self.matched_portfolios(ids)
-        array = []
-        ids.map{ |id|
-            array.push(self.find(id)) 
-            } 
-        return array
-    end
 end

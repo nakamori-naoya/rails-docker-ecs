@@ -1,6 +1,6 @@
 class Profile < ApplicationRecord
   validates :nickname, presence: true, length: { in: 1..20 }, uniqueness: {case_sensitive: true}
-  validates :description,  length: { in: 0..400 }
+  validates :self_introduction,  length: { in: 0..400 }
   validates :programming_start_date, presence: true
   # validates :image, 
   #   attached: true,   #添付がマストになる。   画像投稿のバリデーションは共通するので切り出そう
