@@ -39,8 +39,8 @@ class Api::V1::PortfoliosController < ApplicationController
     
     #カテゴリは複数投稿できるので、配列で送られてくるはず。なので、PortfolioCategoryFormの処理で工夫が必要
     def create
-        @portfolio_category_form = PortfolioCategoryForm.new(portfolios_params)
-        if @portfolio_category_form.save!
+            @portfolio_category_form = PortfolioCategoryForm.new(portfolios_params)
+        if @portfolio_category_form.save
             #値を返す
         else
             #エラーコードを送る
@@ -60,7 +60,8 @@ class Api::V1::PortfoliosController < ApplicationController
 
     private
     def portfolios_params
-        params.permit(:title, :description, :site_url, :github_url, :name, :images, :user_id)
+        # params.permit(:title, :description, :site_url, :github_url, :user_id, :images , :name)
+        params.permit(:title, :description, :site_url, :github_url, :user_id, :images, :name)
     end
 
 end
