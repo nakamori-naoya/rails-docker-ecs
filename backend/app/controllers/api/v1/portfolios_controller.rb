@@ -1,5 +1,5 @@
 class Api::V1::PortfoliosController < ApplicationController
-    before_action :authenticate_user, except: [:index, :show]
+    before_action :authenticate_user, except: [:index, :show, :search]
 
     def index
         @new_arrival = Portfolio.includes(user: :profile).limit(10).order("created_at DESC")
@@ -27,13 +27,13 @@ class Api::V1::PortfoliosController < ApplicationController
                                                             "comprehensive_evaluation", 
                                                             "portfolio_id".intern))
         render json: { 
-                    newArrival: MergeRecordsWithProfile.call(@new_arrival) ,
-                    highCreativity: @high_creativity ? MergeRecordsWithProfile.call(@high_creativity) : [],
-                    highSociality:  @high_sociality ? MergeRecordsWithProfile.call(@high_sociality ): [],
-                    highSkill: @high_skill ? MergeRecordsWithProfile.call(@high_skill) : [],
-                    highUsability: @high_usability ? MergeRecordsWithProfile.call(@high_usability) : [],
-                    highBusinessOriented: @high_business_oriented ? MergeRecordsWithProfile.call(@high_business_oriented) : [],
-                    highComprehensiveEvaluation: @high_comprehensive ? MergeRecordsWithProfile.call(@high_comprehensive) : []
+                    newArrival: merge_records_with_profile(@new_arrival) ,
+                    highCreativity: @high_creativity ? merge_records_with_profile(@high_creativity) : [],
+                    highSociality:  @high_sociality ? merge_records_with_profile(@high_sociality ): [],
+                    highSkill: @high_skill ? merge_records_with_profile(@high_skill) : [],
+                    highUsability: @high_usability ? merge_records_with_profile(@high_usability) : [],
+                    highBusinessOriented: @high_business_oriented ? merge_records_with_profile(@high_business_oriented) : [],
+                    highComprehensiveEvaluation: @high_comprehensive ? merge_records_with_profile(@high_comprehensive) : []
                 }
     end
     
@@ -41,27 +41,36 @@ class Api::V1::PortfoliosController < ApplicationController
     def create
             @portfolio_category_form = PortfolioCategoryForm.new(portfolios_params)
         if @portfolio_category_form.save
-            #値を返す
+            render json: {data: @portfolio_category_form}
         else
             #エラーコードを送る
         end
     end
 
     def search
-        #引数で送られてきた数字と評価項目のポートフォリオを返す関数にしたい
+        elements = {
+            obj: Portfolio,
+            keyword_column: 'title',
+            keyword: params[:keyword],
+        }
+        @portfolios = SearchService.call(elements)
+        render json: {data: @portfolios}
     end
 
     
     def show
         @portfolio = Portfolio.find(params[:id])
-        render json: {status: 200, data: @portfolio}
+        @added_profile = merge_records_with_profile(@portfolio)
+        @added_portfolio = @added_profile.merge({chats: merge_records_with_profile(@portfolio.chats), avg_eval: @portfolio.avg_eval})
+
+        render json: {status: 200, data: @added_portfolio}
     end
 
 
     private
     def portfolios_params
         # params.permit(:title, :description, :site_url, :github_url, :user_id, :images , :name)
-        params.permit(:title, :description, :site_url, :github_url, :user_id, :images, :name)
+        params.permit(:id ,:title, :description, :site_url, :github_url, :user_id, :images, :name)
     end
 
 end

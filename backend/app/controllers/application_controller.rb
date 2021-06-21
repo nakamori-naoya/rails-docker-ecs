@@ -45,4 +45,35 @@ class ApplicationController < ActionController::API
       result = parsed_data.except(*except_keywords_in_array)
       result
   end
+
+
+
+  #url_for問題が解決できず、仕方なくapp_controllerに実装
+  def merge_records_with_profile(records)
+    if records.respond_to?(:length)  #レコードが複数か1つかを分岐したいのだが、いいメソッドが思い浮かばず、lengthメソッドが使えるか？で分岐している。。。
+      result = records.map {|record|
+        merge_record_with_profile(record)
+      }
+      result
+    else 
+      result = merge_record_with_profile(records)
+      result
+    end
+  end
+
+  private
+  def merge_record_with_profile(record)
+    if record.user
+      if record.user.profile && record.user.profile.image.attached?
+        with_image_profile = record.user.profile.attributes.merge({image: url_for(record.user.profile.image)}) 
+        record.attributes.merge({profile: with_image_profile})
+      elsif record.user.profile
+          record.attributes.merge(record.user.profile.attributes)
+      else
+          record
+      end
+    else 
+      record
+    end
+  end
 end
