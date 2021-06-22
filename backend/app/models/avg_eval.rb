@@ -9,11 +9,12 @@ class AvgEval < ApplicationRecord
     def self.calcurate(args)
         existing_records = args[:existing_records] 
         new_arrival = args[:new_arrival] 
+        params =args[:params] 
         attributes = delete_attributes_from(convert_attributes_to_array)
         avg_params = attributes.map { |attribute|
-            calcurate_avg(attribute, existing_records.pluck(attribute),  new_arrival[attribute] )
+            calcurate_avg(attribute, existing_records.pluck(attribute),  new_arrival[attribute], params )
             }
-        avg_params
+        params
     end
 
 
@@ -29,13 +30,10 @@ class AvgEval < ApplicationRecord
         return new_attributes
     end
 
-    def self.calcurate_avg(attribute, datas , new_arrival)    
-        avg_params = {}
-        avg_params[attribute] = (datas.sum(0.0) + new_arrival) / (datas.length + 1 )
-        avg_params
+    def self.calcurate_avg(attribute, datas , new_arrival, params)    
+        params[attribute] = (datas.sum(0.0) + new_arrival) / (datas.length + 1 )
+        params
     end
-        
-
 end
 
 #おそらくvalidationやコールバックはほとんど必要がない 

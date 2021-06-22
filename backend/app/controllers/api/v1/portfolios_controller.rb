@@ -62,7 +62,7 @@ class Api::V1::PortfoliosController < ApplicationController
         @portfolio = Portfolio.find(params[:id])
         @added_profile = merge_records_with_profile(@portfolio)
         @added_portfolio = @added_profile.merge({chats: merge_records_with_profile(@portfolio.chats), avg_eval: @portfolio.avg_eval})
-
+        #のちに「良いね」も一緒にrenderする予定
         render json: {status: 200, data: @added_portfolio}
     end
 

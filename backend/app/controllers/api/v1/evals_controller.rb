@@ -3,24 +3,24 @@ class Api::V1::EvalsController < ApplicationController
 
     def create
       @eval = Eval.new(evals_params)
+      ActiveRecord::Base.transaction do
       portfolio_id = {portfolio_id: params[:portfolio_id]}
-      
-      @eval = Eval.first
-      portfolio_id = {portfolio_id: 1}
-
-      if @eval.save
-        #イメージの処理 avg_eval = AvgEval.new して avg_eval.calcurate(portfolio_id, Eval.where(portfolio_id), @eval)
-        if AvgEval.exists?(portfolio_id)
-          @avg_eval = AvgEval.find_by(portfolio_id)
-          avg_params = AvgEval.calcurate({existing_records: Eval.where(portfolio_id),  new_arrival: @eval })
-          @avg_eval.update(avg_params)
-          render json: {status: 200, data: avg_eval_fields(@avg_eval.to_json)}
+        if @eval.save
+          #イメージの処理 avg_eval = AvgEval.new して avg_eval.calcurate(portfolio_id, Eval.where(portfolio_id), @eval)
+          if AvgEval.exists?(portfolio_id)
+            @avg_eval = AvgEval.find_by(portfolio_id)
+            avg_params = AvgEval.calcurate({
+              existing_records: Eval.where(portfolio_id),  
+              new_arrival: @eval,  params: {}})
+            @avg_eval.update(avg_params)
+            render json: {status: 200, data: except_fields(@avg_eval,[]) }
+          else
+            @avg_eval =   AvgEval.create(evals_params)  #新規作成の場合
+            render json: {status: 201, data: except_fields(@avg_eval,[])}
+          end
         else
-          @avg_eval =   AvgEval.create(evals_params)  #新規作成の場合
-          render json: {status: 201, data: avg_eval_fields(@avg_eval.to_json)}
+          response_internal_server_error
         end
-      else
-        response_internal_server_error
       end
     end
 
@@ -33,7 +33,7 @@ class Api::V1::EvalsController < ApplicationController
 
     def evals_params
         #user_idとportfolio_idもReactから送ることを想定しておく
-      params.permit(:usability, :sociality, :sociality, 
+      params.permit(:usability, :sociality,  
                     :business_oriented, :creativity, 
                     :skill, :comprehensive_evaluation, 
                     :user_id, :portfolio_id

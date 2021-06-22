@@ -68,7 +68,7 @@ class ApplicationController < ActionController::API
         with_image_profile = record.user.profile.attributes.merge({image: url_for(record.user.profile.image)}) 
         record.attributes.merge({profile: with_image_profile})
       elsif record.user.profile
-          record.attributes.merge(record.user.profile.attributes)
+          record.attributes.merge({profile: record.user.profile.attributes})
       else
           record
       end
