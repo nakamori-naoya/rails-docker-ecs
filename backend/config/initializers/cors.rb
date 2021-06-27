@@ -7,8 +7,10 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
     allow do
-      origins "*"
-      resource "*",
+      origins "https://next-js-todos.vercel.app/",
+      "https://next-js-portfolio-2-294grdsl5-nakamori-naoya.vercel.app"
+  
+      resource "https://next-js-todos.vercel.app/",
         headers: :any,
         methods: [:get, :post, :put, :patch, :delete, :options, :head]
     end
