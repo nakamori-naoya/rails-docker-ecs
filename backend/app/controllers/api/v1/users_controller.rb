@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-    before_action :authenticate_user, except: [:create, :logout, :destroy, :search]
+    before_action :authenticate_user, except: [:create, :logout, :destroy, :incremental_search, :search]
 # curl -X "GET" "http://localhost:3000/api/v1/users" -H "Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2MTU2OTc4MTcsInN1YiI6MX0.HMjFKqWzMJW8Jy28aZWpjldHaMPsknWjZAh7UuX4rY0" -H "Content-Type: application/json"
     def index
       if current_user
@@ -50,6 +50,16 @@ class Api::V1::UsersController < ApplicationController
         user = User.find(params[:id]) 
         user.destroy
         render json: {status: 200}
+      end
+
+      def incremental_search
+        elements = {
+          obj: Profile,
+          keyword_column: 'nickname',
+          keyword: params[:keyword],
+        }
+        @profiles = SearchService.call(elements)
+        render json: {data: except_records_fields(@profiles, [])}
       end
 
       def search

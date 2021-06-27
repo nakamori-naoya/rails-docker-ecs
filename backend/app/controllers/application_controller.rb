@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::API
-    include Knock::Authenticable
+  include Knock::Authenticable
     # 200 Success
   def response_success(class_name, action_name)
     render status: 200, json: { status: 200, message: "Success #{class_name.capitalize} #{action_name.capitalize}" }
@@ -61,7 +61,29 @@ class ApplicationController < ActionController::API
     end
   end
 
+  def merge_records_with_images(records)
+    if records.respond_to?(:length)  #レコードが複数か1つかを分岐したいのだが、いいメソッドが思い浮かばず、lengthメソッドが使えるか？で分岐している。。。
+      result = records.map {|record|
+        merge_record_with_images(record)
+      }
+      result
+    else 
+      result = merge_record_with_images(records)
+      result
+    end
+  end
+
   private
+
+  def merge_record_with_images(record)
+      if record.images.attached?
+        result =record.attributes.merge({images: url_for(record.images[0])}) 
+        result
+      else
+        record
+      end
+  end
+
   def merge_record_with_profile(record)
     if record.user
       if record.user.profile && record.user.profile.image.attached?
@@ -76,4 +98,7 @@ class ApplicationController < ActionController::API
       record
     end
   end
+
+
+
 end

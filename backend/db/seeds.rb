@@ -5,17 +5,15 @@
   )
 end
 
-# 10.times do |n|
-#     Profile.create!(
-#     nickname: Faker::Name.unique.name,
-#     self_introduction: Faker::Lorem.characters(number: 400),
-#     programming_start_date: Faker::Date.between(from: '1900-01-01', to: '2021-12-31'),
-#     web_site_url: Faker::Lorem.sentence,
-#     # image: ActiveStorage::Blob.create_and_upload!(io: File.open("/app/assets/images/DHH.jpeg")),
-#     #image: open("./db/fixtures/ruby.svg"),
-#     user_id: n + 1,
-#     )
-# end
+10.times do |n|
+    Profile.create!(
+    nickname: Faker::Name.unique.name,
+    self_introduction: Faker::Lorem.characters(number: 400),
+    programming_start_date: Faker::Date.between(from: '1900-01-01', to: '2021-12-31'),
+    web_site_url: Faker::Lorem.sentence,
+    user_id: n + 1,
+    )
+end
 
 # 10.times do |n|
 #   Profile.create!(
@@ -30,15 +28,15 @@ end
 
 
 
-# 100.times do |n|
-#   Portfolio.create!(
-#     title: "User2の投稿",
-#     description: "ajfafa",
-#     site_url: "https://github.com/nakamori-naoya",
-#     github_url: "https://github.com/nakamori-naoya",
-#     user_id: 2,   
-#     )
-# end
+60.times do |n|
+  Portfolio.create!(
+    title: "User2の投稿",
+    description: "ajfafa",
+    site_url: "https://github.com/nakamori-naoya",
+    github_url: "https://github.com/nakamori-naoya",
+    user_id: 2,   
+    )
+end
 
 
 10.times do |n|

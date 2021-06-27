@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       post 'user_token' => 'user_token#create'
       resources :users do
         collection do
+          post 'incremental_search'
           post 'search'
         end
         resource :profile do 
@@ -12,7 +13,9 @@ Rails.application.routes.draw do
       end
       resources :portfolios do
         collection do
+          post 'incremental_search'
           post 'search'
+          post 'my_portfolios'
         end
         resources :evals
         resources :chats
@@ -21,6 +24,7 @@ Rails.application.routes.draw do
 
       resources :categories do
         collection do
+          post 'incremental_search'
           post 'search'
         end
       end

@@ -15,7 +15,7 @@ class Api::V1::EvalsController < ApplicationController
             @avg_eval.update(avg_params)
             render json: {status: 200, data: except_fields(@avg_eval,[]) }
           else
-            @avg_eval =   AvgEval.create(evals_params)  #新規作成の場合
+            @avg_eval =   AvgEval.create(avg_evals_params)  #新規作成の場合
             render json: {status: 201, data: except_fields(@avg_eval,[])}
           end
         else
@@ -40,9 +40,11 @@ class Api::V1::EvalsController < ApplicationController
                     )
     end
 
-    def avg_eval_fields(avg_eval_json)
-      user_parse = JSON.parse(avg_eval_json)
-      user_parse.except('id','user_id','created_at', 'updated_at')
-    end
+    def avg_evals_params
+      #user_idとportfolio_idもReactから送ることを想定しておく
+    params.permit(:usability, :sociality,  :business_oriented, :creativity, 
+                  :skill, :comprehensive_evaluation,  :portfolio_id
+                  )
+  end
 
 end

@@ -1,7 +1,5 @@
 class Api::V1::ProfilesController < ApplicationController
 
-
-
   def create
     if Profile.find_by(user_id: params[:user_id]).present?
       update
