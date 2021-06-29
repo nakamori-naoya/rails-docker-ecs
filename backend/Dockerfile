@@ -19,6 +19,8 @@ RUN apt-get update -qq && \
 
 RUN bundle install
 
+RUN RAILS_ENV=production DISABLE_DATABASE_ENVIRONMENT_CHECK=1 bundle exec rails db:drop
+
 ADD . /app
 RUN mkdir -p tmp/sockets
 RUN mkdir tmp/pids

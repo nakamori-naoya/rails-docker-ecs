@@ -5,15 +5,15 @@
   )
 end
 
-10.times do |n|
-    Profile.create!(
-    nickname: Faker::Name.unique.name,
-    self_introduction: Faker::Lorem.characters(number: 400),
-    programming_start_date: Faker::Date.between(from: '1900-01-01', to: '2021-12-31'),
-    web_site_url: Faker::Lorem.sentence,
-    user_id: n + 1,
-    )
-end
+# 10.times do |n|
+#     Profile.create!(
+#     nickname: Faker::Name.unique.name,
+#     self_introduction: Faker::Lorem.characters(number: 400),
+#     programming_start_date: Faker::Date.between(from: '1900-01-01', to: '2021-12-31'),
+#     web_site_url: Faker::Lorem.sentence,
+#     user_id: n + 1,
+#     )
+# end
 
 # 10.times do |n|
 #   Profile.create!(
@@ -28,15 +28,15 @@ end
 
 
 
-60.times do |n|
-  Portfolio.create!(
-    title: "User2の投稿",
-    description: "ajfafa",
-    site_url: "https://github.com/nakamori-naoya",
-    github_url: "https://github.com/nakamori-naoya",
-    user_id: 2,   
-    )
-end
+# 60.times do |n|
+#   Portfolio.create!(
+#     title: "User2の投稿",
+#     description: "ajfafa",
+#     site_url: "https://github.com/nakamori-naoya",
+#     github_url: "https://github.com/nakamori-naoya",
+#     user_id: 2,   
+#     )
+# end
 
 
 10.times do |n|
@@ -46,12 +46,12 @@ end
   })
 end
 
-200.times do |n|
-  name = Faker::Lorem.paragraph(sentence_count: 2, supplemental: true, random_sentences_to_add: 1)
-  Category.create!({
-    name: name,
-  })
-end
+# 200.times do |n|
+#   name = Faker::Lorem.paragraph(sentence_count: 2, supplemental: true, random_sentences_to_add: 1)
+#   Category.create!({
+#     name: name,
+#   })
+# end
 
 
 
@@ -62,18 +62,18 @@ end
 # # })
 
 
-10.times do |n|
-    Eval.create!(
-      sociality: 2.5,
-      usability: 2.0,
-      business_oriented: 1.5,
-      creativity: 2.0,
-      skill: 2.0,
-      comprehensive_evaluation: 2.0, 
-      user_id: 1,
-      portfolio_id: 2
-      )
-  end
+# 10.times do |n|
+#     Eval.create!(
+#       sociality: 2.5,
+#       usability: 2.0,
+#       business_oriented: 1.5,
+#       creativity: 2.0,
+#       skill: 2.0,
+#       comprehensive_evaluation: 2.0, 
+#       user_id: 1,
+#       portfolio_id: 2
+#       )
+#   end
 
 #   10.times do |n|
 #     Eval.create!(
@@ -90,17 +90,17 @@ end
 
 
 
-  1.times do |n|
-    AvgEval.create!(
-      sociality: 2.5,
-      usability: 2.0,
-      business_oriented: 1.5,
-      creativity: 2.0,
-      skill: 2.0,
-      comprehensive_evaluation: 2.0, 
-      portfolio_id: 2
-      )
-  end
+  # 1.times do |n|
+  #   AvgEval.create!(
+  #     sociality: 2.5,
+  #     usability: 2.0,
+  #     business_oriented: 1.5,
+  #     creativity: 2.0,
+  #     skill: 2.0,
+  #     comprehensive_evaluation: 2.0, 
+  #     portfolio_id: 2
+  #     )
+  # end
 
 #   10.times do |n|
 #     AvgEval.create!(
@@ -115,21 +115,21 @@ end
 #      )
 #   end
 
-  10.times do |n|
-    Chat.create!(
-      text: "hello#{n + 1}",
-      user_id: 2,
-      portfolio_id: 2  
-      )
-  end
+  # 10.times do |n|
+  #   Chat.create!(
+  #     text: "hello#{n + 1}",
+  #     user_id: 2,
+  #     portfolio_id: 2  
+  #     )
+  # end
 
-  10.times do |n|
-    Chat.create!(
-      text: "goodbye#{n + 1}",
-      user_id: 1,
-      portfolio_id: 2  
-      )
-  end
+  # 10.times do |n|
+  #   Chat.create!(
+  #     text: "goodbye#{n + 1}",
+  #     user_id: 1,
+  #     portfolio_id: 2  
+  #     )
+  # end
 
 # #   10.times do |n|
 # #     Blog.create!(
