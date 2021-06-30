@@ -17,6 +17,8 @@ class Api::V1::CategoriesController < ApplicationController
       
     end
 
+
+
     def set_categories
       elements = {
         obj: Category,
