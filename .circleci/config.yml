@@ -95,13 +95,13 @@ workflows:
       - test_backend:
           filters:
             branches:
-              only: main
+              ignore: main
       - build_and_push_image_backend:
           requires:
             - test_backend
           filters:
             branches:
-              only: main
+              ignore: main
       - aws-ecs/deploy-service-update:
           requires:
             - build_and_push_image_backend
@@ -111,4 +111,4 @@ workflows:
           container-image-name-updates: "container=zenn-app-container-backend,tag=${CIRCLE_SHA1}"
           filters:
             branches:
-              only: main
+              ignore: main
