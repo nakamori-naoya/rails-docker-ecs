@@ -84,7 +84,12 @@ jobs:
 
 workflows:
   version: 2
-
+  # test:
+  #   jobs:
+  #     - test_backend:
+  #         filters:
+  #           branches:
+  #             ignore: main
   test_and_deploy:
     jobs:
       - test_backend:
