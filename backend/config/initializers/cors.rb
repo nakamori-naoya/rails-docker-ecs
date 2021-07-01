@@ -8,8 +8,8 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
     allow do
       origins "http://localhost:3001", "http://localhost:3002", "http://localhost:3003" , 
-      "next-js-portfolio10-7826ov0sj-nakamori-naoya.vercel.app", "https://next-js-portfolio10-7826ov0sj-nakamori-naoya.vercel.app/"
-      "https://next-js-portfolio10.vercel.app/"
+      "next-js-portfolio10-7826ov0sj-nakamori-naoya.vercel.app", "https://next-js-portfolio10-7826ov0sj-nakamori-naoya.vercel.app/",
+      "https://next-js-portfolio10.vercel.app/","next-js-portfolio10.vercel.app"
       resource "*",
         headers: :any,
         methods: [:get, :post, :put, :patch, :delete, :options, :head]
