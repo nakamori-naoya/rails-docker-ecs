@@ -89,7 +89,7 @@ workflows:
       - test_backend:
           filters:
             branches:
-              ignore: main
+              only: main
   test_and_deploy:
     jobs:
       - test_backend:
