@@ -89,13 +89,13 @@ workflows:
       - test_backend:
           filters:
             branches:
-              only: main
+              ignore: main
   test_and_deploy:
     jobs:
       - test_backend:
           filters:
             branches:
-              only: main
+              ignore: main
       - build_and_push_image_backend:
           requires:
             - test_backend
