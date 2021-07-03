@@ -47,8 +47,8 @@ gem "bcrypt"
 gem "jsonapi-resources"
 gem "knock"
 gem 'dotenv-rails'
-# gem "aws-sdk-s3", require: false
 gem 'mini_magick'
+gem 'aws-sdk-s3', require: false
 gem 'image_processing', '~> 1.2'
 gem 'pry-rails'
 gem'active_storage_validations','~>0.8.8'
