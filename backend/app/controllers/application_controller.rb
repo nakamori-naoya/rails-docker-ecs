@@ -77,7 +77,7 @@ class ApplicationController < ActionController::API
 
   def merge_record_with_images(record)
       if record.images.attached?
-        result =record.attributes.merge({images: url_for(record.images[0])}) 
+        result =record.attributes.merge({images: rails_storage_proxy_url(record.images[0])}) 
         result
       else
         record
@@ -87,7 +87,7 @@ class ApplicationController < ActionController::API
   def merge_record_with_profile(record)
     if record.user
       if record.user.profile && record.user.profile.image.attached?
-        with_image_profile = record.user.profile.attributes.merge({image: url_for(record.user.profile.image)}) 
+        with_image_profile = record.user.profile.attributes.merge({image: rails_storage_proxy_url(record.user.profile.image)}) 
         record.attributes.merge({profile: with_image_profile})
       elsif record.user.profile
           record.attributes.merge({profile: record.user.profile.attributes})
