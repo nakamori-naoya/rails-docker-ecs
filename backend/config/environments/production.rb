@@ -21,7 +21,8 @@ Rails.application.configure do
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
-  Rails.application.routes.default_url_options[:host] = 'localhost'
+  
+  Rails.application.routes.default_url_options[:host] = 'zenn-app-backend-1931651318.ap-northeast-1.elb.amazonaws.com'
   Rails.application.routes.default_url_options[:port] = 3000
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
