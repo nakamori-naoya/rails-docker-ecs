@@ -26,9 +26,9 @@ RUN mkdir -p tmp/sockets
 RUN mkdir tmp/pids
 
 # nginx
-# RUN groupadd nginx
-# RUN useradd -g nginx nginx
-# ADD nginx/nginx.conf /etc/nginx/nginx.conf
+RUN groupadd nginx
+RUN useradd -g nginx nginx
+ADD nginx/nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80
 
