@@ -37,4 +37,4 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 plugin :tmp_restart
 
 app_root = File.expand_path('..', __dir__)
-bind "unix://#{app_root}/shared/tmp/sockets/puma.sock"
+bind "unix://#{app_root}/tmp/sockets/puma.sock"
