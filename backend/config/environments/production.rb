@@ -23,7 +23,7 @@ Rails.application.configure do
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
   
   Rails.application.routes.default_url_options[:host] = 'zenn-app-backend-1931651318.ap-northeast-1.elb.amazonaws.com'
-  Rails.application.routes.default_url_options[:port] = 3000
+  Rails.application.routes.default_url_options[:port] = 443
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'

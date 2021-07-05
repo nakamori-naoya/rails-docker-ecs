@@ -99,7 +99,7 @@ workflows:
       - aws-ecs/deploy-service-update:
           requires:
             - build_and_push_image_backend
-          family: "zenn-app-task-backend"  #タスク名
+          family: "zenn-app-task-backend2"  #タスク名
           service-name: "test10"  #サービス名
           cluster-name: "production"  #クラスター名
           container-image-name-updates: "container=zenn-app-container-backend,tag=${CIRCLE_SHA1}"
