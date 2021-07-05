@@ -5,7 +5,7 @@ class Api::V1::UsersController < ApplicationController
       if current_user
         if current_user.profile.present?
           @profile = current_user.profile.image.attached? ? 
-                    current_user.profile.attributes.merge({image: url_for(current_user.profile.image), id: current_user.id}) 
+                    current_user.profile.attributes.merge({image: url_for(current_user.profile.image, disposition: "attachment"), id: current_user.id}) 
                     : 
                     current_user.profile.merge({id: current_user.id})
           render json: {status: 200, data: except_fields(@profile, [])}
