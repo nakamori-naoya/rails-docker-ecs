@@ -15,10 +15,6 @@ class Api::V1::ProfilesController < ApplicationController
     end
   end
 
-  def show
-    
-  end
-
   def update
     @profile = Profile.find_by(user_id: params[:user_id])
     if @profile.invalid?

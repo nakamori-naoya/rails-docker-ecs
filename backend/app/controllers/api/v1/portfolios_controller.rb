@@ -41,10 +41,10 @@ class Api::V1::PortfoliosController < ApplicationController
     #カテゴリは複数投稿できるので、配列で送られてくるはず。なので、PortfolioCategoryFormの処理で工夫が必要
     def create
             @portfolio_category_form = PortfolioCategoryForm.new(portfolios_params)
-        if @portfolio_category_form.save
+        if  @portfolio_category_form.invalid?
+            render json: {status: 404, data:  @portfolio_category_form.errors.full_messages} 
+        elsif  @portfolio_category_form.save
             render json: {data: @portfolio_category_form}
-        else
-            #エラーコードを送る
         end
     end
 

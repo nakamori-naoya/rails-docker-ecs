@@ -17,15 +17,14 @@ class PortfolioCategoryForm
           site_url: site_url, github_url: github_url, 
           user_id: user_id, images: [images]
         )
-        #複数のカテゴリを追加する時はここで、mapを回せばいいのか？？ 
-        #おそらくparamsとしてnames: []で送りnamesをmapで回す
+        
+        #categoriesが複数送られてくるので、それを分割し、配列に格納
         names = name.split(',')
         names.map{|name|
           category = Category.where(name: name).first_or_initialize  
           category.save!
           PortfolioCategory.create!(portfolio_id: portfolio.id, category_id: category.id)
         }
-
     end
   end
 
