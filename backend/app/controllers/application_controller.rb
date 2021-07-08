@@ -75,15 +75,6 @@ class ApplicationController < ActionController::API
 
   private
 
-  def merge_record_with_images(record)
-      if record.images.attached?
-        result =record.attributes.merge({images: url_for(record.images[0])}) 
-        result
-      else
-        record
-      end
-  end
-
   def merge_record_with_profile(record)
     if record.user
       if record.user.profile && record.user.profile.image.attached?
@@ -92,12 +83,23 @@ class ApplicationController < ActionController::API
       elsif record.user.profile
           record.attributes.merge({profile: record.user.profile.attributes})
       else
-          record
+          record.attributes
       end
     else 
-      record
+      record.attributes
     end
   end
+
+  def merge_record_with_images(record)
+      if record.images.attached?
+        result =record.attributes.merge({images: url_for(record.images[0])}) 
+        result
+      else
+        record.attributes
+      end
+  end
+
+
 
 
 

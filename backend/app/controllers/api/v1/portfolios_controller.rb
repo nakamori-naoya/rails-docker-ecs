@@ -1,5 +1,5 @@
 class Api::V1::PortfoliosController < ApplicationController
-    before_action :authenticate_user, except: [:index, :show, :create, :incremental_search, :search, :my_portfolios]
+    before_action :authenticate_user, except: [:index, :show, :create, :incremental_search, :search, :my_portfolios, :destroy]
 
     def index
         @new_arrival = merge_records_with_images(Portfolio.includes(user: :profile).limit(10).order("created_at DESC"))
@@ -44,7 +44,17 @@ class Api::V1::PortfoliosController < ApplicationController
         if  @portfolio_category_form.invalid?
             render json: {status: 404, data:  @portfolio_category_form.errors.full_messages} 
         elsif  @portfolio_category_form.save
-            render json: {data: @portfolio_category_form}
+            render json: {status: 201}
+        end
+    end
+
+    #updateアクションの実装並びに、PortfolioCategoryFormにupdateアクションの記述が必要
+    def update 
+        @portfolio_category_form = PortfolioCategoryForm.new(portfolios_params)
+        if  @portfolio_category_form.invalid?
+            render json: {status: 404, data:  @portfolio_category_form.errors.full_messages} 
+        elsif  @portfolio_category_form.update
+            render json: {status: 201}
         end
     end
 
@@ -59,13 +69,22 @@ class Api::V1::PortfoliosController < ApplicationController
     end
 
     def my_portfolios
-        user = User.find(params[:user_id])
+        current_user = User.find(params[:user_id])
         if current_user.portfolios.exists?
-            @portfolios = merge_records_with_profile(current_user.portfolios)
+            @portfolios = merge_records_with_images(current_user.portfolios)
         else
             @portfolios = {data: ""}
         end         
         render json: {data: @portfolios ? @portfolios : {data: ""}}
+    end
+
+    def destroy
+        portfolio = Portfolio.find(params[:id])
+        if portfolio.destroy
+            render json: {satus: 200, data: portfolio.id}
+        elsif portfolio.invalid?
+            render json: {satus: portfolio.errors.full_messages}
+        end
     end
 
     def search
@@ -78,17 +97,17 @@ class Api::V1::PortfoliosController < ApplicationController
         render json: {data: @portfolios}
     end
 
-    
     def show
         @portfolio = Portfolio.find(params[:id])
         @added_profile = merge_records_with_profile(@portfolio)
         @added_portfolio = @added_profile.merge({
-            chats: merge_records_with_profile(@portfolio.chats), 
+            chats:  merge_records_with_profile(@portfolio.chats) ,
             avg_eval: @portfolio.avg_eval ? @portfolio.avg_eval : {sociality: 0, usability: 0,business_oriented: 0, creativity: 0,skill: 0,comprehensive_evaluation: 0},
-            images:  @portfolio.images.attached? ? url_for(@portfolio.images[0]) : ""
+            images:  @portfolio.images.attached? ? url_for(@portfolio.images[0]) : "",
+            categories: @portfolio.categories ? @portfolio.categories : ""
             })
         #のちに「良いね」も一緒にrenderする予定
-        render json: {status: 200, data: @added_portfolio}
+        render json: {status: 200, data:  @added_portfolio}
     end
 
 
