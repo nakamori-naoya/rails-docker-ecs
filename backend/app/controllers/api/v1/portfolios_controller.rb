@@ -99,7 +99,7 @@ class Api::V1::PortfoliosController < ApplicationController
 
     def show
         @portfolio = Portfolio.find(params[:id])
-        @added_profile = merge_records_with_profile(@portfolio)
+        @added_profile = @portfolio.user.profile ?  merge_records_with_profile(@portfolio) : @portfolio.attributes.merge({profile: {nickname: "", image: "", user_id: @portfolio.user.id}})
         @added_portfolio = @added_profile.merge({
             chats:  merge_records_with_profile(@portfolio.chats) ,
             avg_eval: @portfolio.avg_eval ? @portfolio.avg_eval : {sociality: 0, usability: 0,business_oriented: 0, creativity: 0,skill: 0,comprehensive_evaluation: 0},
