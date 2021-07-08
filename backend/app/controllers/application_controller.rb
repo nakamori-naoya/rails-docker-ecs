@@ -73,6 +73,19 @@ class ApplicationController < ActionController::API
     end
   end
 
+  #メソッドの中身がかなり重複しているので、引数にisMultipleをtrueもしくはfalseで送るのはどうだろう？
+  def merge_records_with_image(records)
+    if records.respond_to?(:length)  #レコードが複数か1つかを分岐したいのだが、いいメソッドが思い浮かばず、lengthメソッドが使えるか？で分岐している。。。
+      result = records.map {|record|
+        merge_record_with_image(record)
+      }
+      result
+    else 
+      result = merge_record_with_image(records)
+      result
+    end
+  end
+
   private
 
   def merge_record_with_profile(record)
@@ -98,6 +111,15 @@ class ApplicationController < ActionController::API
         record.attributes
       end
   end
+
+  def merge_record_with_image(record)
+    if record.image.attached?
+      result =record.attributes.merge({image: url_for(record.image)}) 
+      result
+    else
+      record.attributes
+    end
+end
 
 
 

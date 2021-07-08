@@ -1,7 +1,7 @@
 class Api::V1::UsersController < ApplicationController
     before_action :authenticate_user, except: [:create, :logout, :destroy, :incremental_search, :search]
     
-def index
+    def index
       if current_user
         if current_user.profile.present?
           @profile = current_user.profile.image.attached? ? 
@@ -33,18 +33,19 @@ def index
       end
     end
 
-
-      def logout
-        render json: {status: 200}
-      end
+    def show
+      user = User.find(params[:id])
+      @profile = user.profile.image.attached? ? user.profile.attributes.merge({image: url_for(user.profile.image)}) : user.profile
+      render json: {status: 200, data: except_fields(@profile, []) }
+    end
 
       #この処理って何に使うんやっけ？？？
-      def update
-          previous_user = User.find(params[:id]) 
-          previous_user.update(users_params)
-          @user = current_user.image.attached? ? current_user.attributes.merge({image: url_for(current_user.image)}) : current_user
-          render json: {status: 200, data: except_fields(@user, ["email" , "password_digest", "created_at", "updated_at"]) }
-      end
+      # def update
+      #     previous_user = User.find(params[:id]) 
+      #     previous_user.update(users_params)
+      #     @user = current_user.image.attached? ? current_user.attributes.merge({image: url_for(current_user.image)}) : current_user
+      #     render json: {status: 200, data: except_fields(@user, ["email" , "password_digest", "created_at", "updated_at"]) }
+      # end
 
       
       def destroy
@@ -69,7 +70,8 @@ def index
           keyword_column: 'nickname',
           keyword: params[:keyword],
         }
-        @profiles = SearchService.call(elements)
+        profiles = SearchService.call(elements)
+        @profiles =  merge_records_with_image(profiles)
         render json: {data: except_records_fields(@profiles, [])}
       end
 

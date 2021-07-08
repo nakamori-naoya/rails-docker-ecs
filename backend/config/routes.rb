@@ -17,6 +17,9 @@ Rails.application.routes.draw do
           post 'search'
           post 'my_portfolios'
         end
+        member do
+          get 'user_portfolios'
+        end
         resources :evals
         resources :chats
         resource :avg_evals

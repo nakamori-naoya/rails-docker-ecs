@@ -1,5 +1,5 @@
 class Api::V1::PortfoliosController < ApplicationController
-    before_action :authenticate_user, except: [:index, :show, :create, :incremental_search, :search, :my_portfolios, :destroy]
+    before_action :authenticate_user, except: [:index, :show, :create, :incremental_search, :search, :my_portfolios, :destroy, :user_portfolios]
 
     def index
         @new_arrival = merge_records_with_images(Portfolio.includes(user: :profile).limit(10).order("created_at DESC"))
@@ -77,6 +77,16 @@ class Api::V1::PortfoliosController < ApplicationController
         end         
         render json: {data: @portfolios ? @portfolios : {data: ""}}
     end
+
+    def user_portfolios
+        user = User.find(params[:id])
+        if user.portfolios.exists?
+            render json: {status: 200 , data: user.portfolios}
+        elsif user.portfolios.invalid?
+            render json: {status: 404 , data: user.portfolios.errors.full_messages}
+        end
+    end
+
 
     def destroy
         portfolio = Portfolio.find(params[:id])
