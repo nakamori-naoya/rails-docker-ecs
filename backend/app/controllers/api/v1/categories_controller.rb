@@ -8,9 +8,9 @@ class Api::V1::CategoriesController < ApplicationController
     def search 
       if @categories.size > 0
         @portfolios = @categories.map{|c|
-          c.portfolios
+          merge_records_with_images(c.portfolios)
           }
-        render json: {data: @portfolios ? @portfolios : []}
+        render json: {data: @portfolios ? @portfolios.flatten : []}
       else
         render json: {data: []}
       end

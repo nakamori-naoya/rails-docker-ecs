@@ -2,7 +2,7 @@ class Api::V1::PortfoliosController < ApplicationController
     before_action :authenticate_user, except: [:index, :show, :create, :incremental_search, :search, :my_portfolios, :destroy, :user_portfolios]
 
     def index
-        @new_arrival = merge_records_with_images(Portfolio.includes(user: :profile).limit(10).order("created_at DESC"))
+        @new_arrival = merge_records_with_images(Portfolio.includes(user: :profile).limit(300).order("created_at DESC"))
 
         @high_creativity = merge_records_with_images(Portfolio.includes(user: :profile).where(id: AvgEval.search_columns(10, 
                                                             "creativity", 
@@ -81,7 +81,7 @@ class Api::V1::PortfoliosController < ApplicationController
     def user_portfolios
         user = User.find(params[:id])
         if user.portfolios.exists?
-            render json: {status: 200 , data: user.portfolios}
+            render json: {status: 200 , data: merge_records_with_images(user.portfolios)}
         elsif user.portfolios.invalid?
             render json: {status: 404 , data: user.portfolios.errors.full_messages}
         end
