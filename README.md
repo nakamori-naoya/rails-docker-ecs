@@ -1,5 +1,5 @@
 # The Exhibition of Portfolios ver 2.0 ※アプリ概要編
-The Exhibition of Portfolios ver 2.0はReact,Firebase,Reduxを使い作成したThe Exhibition of Portfolios ver 1.0をReact,Next.js,Ruby on Rails,ECS,Docker,CircleCIを使い、実装し直し改善を加えたものです。
+The Exhibition of Portfolios ver 2.0は`React,Firebase,Redux`を使い作成したThe Exhibition of Portfolios ver 1.0を`React,Next.js,Ruby on Rails,ECS,Docker,CircleCI`を使い、実装し直し改善を加えたものです。
 
 ## デモ
 ## トップページ  
