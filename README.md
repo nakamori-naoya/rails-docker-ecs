@@ -2,6 +2,7 @@
 説明を入れる
 
 ## デモ
+<p align="center">
 ## トップページ  
 ![Videotogif (1)](https://user-images.githubusercontent.com/73022482/126039288-59c83129-cb33-4576-ab0f-693de4bcbbd9.gif)  
 
@@ -23,7 +24,7 @@
 
 ## マイページ  
 ![Videotogif (7)](https://user-images.githubusercontent.com/73022482/126039831-cc2ba16c-f568-4d56-8a69-13bc2b2a7ba9.gif)  
-
+</p> 
 
 ## 🌐 URL   
 
