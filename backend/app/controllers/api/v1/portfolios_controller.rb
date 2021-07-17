@@ -104,16 +104,23 @@ class Api::V1::PortfoliosController < ApplicationController
             keyword: params[:keyword],
         }
         @portfolios = SearchService.call(elements)
-        render json: {data: @portfolios}
-    end
 
+        if @portfolios.size > 0
+            @with_images = @portfolios.map{|portfolio|
+                merge_records_with_images(portfolio)
+                }
+            render json: {data: @with_images.flatten}
+        else
+            render json: {data: []}
+        end
+    end
     def show
         @portfolio = Portfolio.find(params[:id])
         @added_profile = @portfolio.user.profile ?  merge_records_with_profile(@portfolio) : @portfolio.attributes.merge({profile: {nickname: "", image: "", user_id: @portfolio.user.id}})
         @added_portfolio = @added_profile.merge({
             chats:  merge_records_with_profile(@portfolio.chats) ,
             avg_eval: @portfolio.avg_eval ? @portfolio.avg_eval : {sociality: 0, usability: 0,business_oriented: 0, creativity: 0,skill: 0,comprehensive_evaluation: 0},
-            images:  @portfolio.images.attached? ? url_for(@portfolio.images[0]) : "",
+            images:  @portfolio.images.attached? ? url_for(@portfolio.images.last) : "",
             categories: @portfolio.categories ? @portfolio.categories : ""
             })
         #のちに「良いね」も一緒にrenderする予定

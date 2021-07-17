@@ -105,7 +105,7 @@ class ApplicationController < ActionController::API
 
   def merge_record_with_images(record)
       if record.images.attached?
-        result =record.attributes.merge({images: url_for(record.images[0])}) 
+        result =record.attributes.merge({images: url_for(record.images.last)}) 
         result
       else
         record.attributes
