@@ -2,6 +2,7 @@
 The Exhibition of Portfolios ver 2.0は`React,Firebase,Redux`を使い作成したThe Exhibition of Portfolios ver 1.0を`React,Next.js,Ruby on Rails,ECS,Docker,CircleCI`を使い、実装し直し改善を加えたものです。
 
 ## デモ
+
 ## トップページ  
 ![Videotogif (1)](https://user-images.githubusercontent.com/73022482/126039288-59c83129-cb33-4576-ab0f-693de4bcbbd9.gif)  
 
@@ -100,7 +101,6 @@ The Exhibition of Portfolios ver 2.0は`React,Firebase,Redux`を使い作成し�
                                                                                     
 ②採用担当者にとっても、採用の初期からアプリをしっかりと見た上でエンジニアの採用を行いたいはずです。                                      
 未経験でもレベルの高いエンジニアの採用ができれば、会社の成長につながるためです。                             
-
 
 ## 参照
 技術的な内容については、[こちら](https://github.com/nakamori-naoya/next-js-portfolio)に記載しています。
