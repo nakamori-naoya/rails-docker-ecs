@@ -1,108 +1,108 @@
-# version: 2.1
+version: 2.1
 
-# orbs:
-#   aws-ecr: circleci/aws-ecr@6.12.2
-#   aws-ecs: circleci/aws-ecs@1.3.0
+orbs:
+  aws-ecr: circleci/aws-ecr@6.12.2
+  aws-ecs: circleci/aws-ecs@1.3.0
 
-# jobs:
-#   test_backend:
-#     docker:
-#       - image: circleci/ruby:2.6.6-stretch-node
-#         environment:
-#           RAILS_ENV: test
-#           DB_HOST: 127.0.0.1
-#       - image: circleci/mysql:5.7.30
+jobs:
+  test_backend:
+    docker:
+      - image: circleci/ruby:2.6.6-stretch-node
+        environment:
+          RAILS_ENV: test
+          DB_HOST: 127.0.0.1
+      - image: circleci/mysql:5.7.30
 
-#     working_directory: ~/repo
+    working_directory: ~/repo
 
-#     steps:
-#       - checkout
+    steps:
+      - checkout
 
-#       # Gemfile.lockのrestore
-#       - restore_cache:
-#           keys:
-#             - gem-cache-v1-{{ checksum "~/repo/backend/Gemfile.lock" }}
-#             - gem-cache-v1-
-#           working_directory: ~/repo/backend
+      # Gemfile.lockのrestore
+      - restore_cache:
+          keys:
+            - gem-cache-v1-{{ checksum "~/repo/backend/Gemfile.lock" }}
+            - gem-cache-v1-
+          working_directory: ~/repo/backend
 
-#       # gemのinstall
-#       # - run:
-#       #     command: |
-#       #       gem install bundler
-#       #       bundle config set path 'vendor/bundle'
-#       #       bundle install --jobs=4 --retry=3
-#       #     working_directory: ~/repo/backend
+      #gemのinstall
+      - run:
+          command: |
+            gem install bundler
+            bundle config set path 'vendor/bundle'
+            bundle install --jobs=4 --retry=3
+          working_directory: ~/repo/backend
 
-#       # - save_cache:
-#       #     key: gem-cache-v1-{{ checksum "~/repo/backend/Gemfile.lock" }}
-#       #     paths:
-#       #       - ~/repo/backend/vendor/bundle
-#       #     working_directory: ~/repo/backend
+      - save_cache:
+          key: gem-cache-v1-{{ checksum "~/repo/backend/Gemfile.lock" }}
+          paths:
+            - ~/repo/backend/vendor/bundle
+          working_directory: ~/repo/backend
 
-#       # # テストで使用するデータベースのset up
-#       # - run:
-#       #     command: bundle exec rails db:create
-#       #     working_directory: ~/repo/backend
-#       # - run:
-#       #     command: bundle exec rails db:migrate
-#       #     working_directory: ~/repo/backend
+      # テストで使用するデータベースのset up
+      - run:
+          command: bundle exec rails db:create
+          working_directory: ~/repo/backend
+      - run:
+          command: bundle exec rails db:migrate
+          working_directory: ~/repo/backend
 
-#       # - run:
-#       #     name: create directory to store test results
-#       #     command: mkdir /tmp/test-results
-#       #     working_directory: ~/repo/backend
+      - run:
+          name: create directory to store test results
+          command: mkdir /tmp/test-results
+          working_directory: ~/repo/backend
 
-#       # - run:
-#       #     name: RSpec
-#       #     command: |
-#       #       bundle exec rspec $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings) \
-#       #         || (printf "====== RETRYING...\n\n\n"; bundle exec rspec --only-failures)
-#       #     working_directory: ~/repo/backend
+      - run:
+          name: RSpec
+          command: |
+            bundle exec rspec $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings) \
+              || (printf "====== RETRYING...\n\n\n"; bundle exec rspec --only-failures)
+          working_directory: ~/repo/backend
 
-#       # # テストのレポートを作成
-#       # - store_test_results:
-#       #     path: /tmp/test-results
-#       # - store_artifacts:
-#       #     path: /tmp/test-results
-#       #     destination: test-results
-#       # - store_artifacts:
-#       #     path: /home/circleci/repo/tmp/screenshots
+      # テストのレポートを作成
+      - store_test_results:
+          path: /tmp/test-results
+      - store_artifacts:
+          path: /tmp/test-results
+          destination: test-results
+      - store_artifacts:
+          path: /home/circleci/repo/tmp/screenshots
 
   
-#   #イメージをビルドする
-#   build_and_push_image_backend:
-#     machine:
-#       image: ubuntu-1604:201903-01
-#     steps:
-#       - checkout
-#       - aws-ecr/build-and-push-image:
-#           account-url: AWS_ACCOUNT_URL
-#           repo: "zenn-app-backend2"  #ECRのリポジトリ名
-#           region: AWS_REGION
-#           tag: "${CIRCLE_SHA1}"
-#           path: ./backend/
+  #イメージをビルドする
+  build_and_push_image_backend:
+    machine:
+      image: ubuntu-1604:201903-01
+    steps:
+      - checkout
+      - aws-ecr/build-and-push-image:
+          account-url: AWS_ACCOUNT_URL
+          repo: "rails-ecs-app"  #ECRのリポジトリ名
+          region: AWS_REGION
+          tag: "${CIRCLE_SHA1}"
+          path: ./backend/
 
-# workflows:
-#   version: 2
-#   test_and_deploy:
-#     jobs:
-#       - test_backend:
-#           filters:
-#             branches:
-#               ignore: main
-#       - build_and_push_image_backend:
-#           requires:
-#             - test_backend
-#           filters:
-#             branches:
-#               ignore: main
-#       - aws-ecs/deploy-service-update:
-#           requires:
-#             - build_and_push_image_backend
-#           family: "zenn-app-task-backend3"  #タスク名
-#           service-name: "test10"  #サービス名
-#           cluster-name: "production"  #クラスター名
-#           container-image-name-updates: "container=zenn-app-container-backend,tag=${CIRCLE_SHA1}"
-#           filters:
-#             branches:
-#               ignore: main
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - test_backend:
+          filters:
+            branches:
+              ignore: main
+      - build_and_push_image_backend:
+          requires:
+            - test_backend
+          filters:
+            branches:
+              ignore: main
+      - aws-ecs/deploy-service-update:
+          requires:
+            - build_and_push_image_backend
+          family: "rails-ecs-app-task"  #タスク名
+          service-name: "rails-ecs-app-service"  #サービス名
+          cluster-name: "production"  #クラスター名
+          container-image-name-updates: "container=zenn-app-container-backend,tag=${CIRCLE_SHA1}"
+          filters:
+            branches:
+              ignore: main
