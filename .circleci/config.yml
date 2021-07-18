@@ -102,9 +102,8 @@ workflows:
           family: "rails-ecs-app-task"  #タスク名
           service-name: "rails-ecs-app-service"  #サービス名
           cluster-name: "production"  #クラスター名
-          container-image-name-updates: "container=zenn-app-container-backend,tag=${CIRCLE_SHA1}"
+          container-image-name-updates: "container=rails-ecs-app-task,tag=${CIRCLE_SHA1}"
           filters:
             branches:
               ignore: main
 
-              
