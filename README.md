@@ -28,7 +28,7 @@ The Exhibition of Portfolios ver 2.0は`React,Firebase,Redux`を使い作成し�
 
 
 ## 🌐 URL   
-
+https://next-js-portfolio10.vercel.app/  
 ## テスト用アカウント
 メールアドレス：test@gmail.com      
 パスワード：test2021
