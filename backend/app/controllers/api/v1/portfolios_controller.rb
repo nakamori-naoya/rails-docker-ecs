@@ -48,7 +48,7 @@ class Api::V1::PortfoliosController < ApplicationController
         end
     end
 
-        
+    
     #updateアクションの実装並びに、PortfolioCategoryFormにupdateアクションの記述が必要
     def update 
         @portfolio_category_form = PortfolioCategoryForm.new(portfolios_params)
